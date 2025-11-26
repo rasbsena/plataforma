@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - Upperfy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Cdefs%3E%3Cstyle%3E.cls-1%7Bfill:%23270949;%7D.cls-2%7Bfill:%23ff3d00;%7D.cls-3%7Bfill:%23fff;%7D%3C/style%3E%3C/defs%3E%3Cpath class='cls-1' d='M140,180 L140,120 Q140,50 200,50 L200,50 Q260,50 260,120 L260,180' stroke='%23270949' stroke-width='28' fill='none' stroke-linecap='round'/%3E%3Crect class='cls-2' x='100' y='170' width='200' height='180' rx='25'/%3E%3Ccircle class='cls-3' cx='200' cy='250' r='30'/%3E%3Crect class='cls-3' x='185' y='250' width='30' height='60' rx='8'/%3E%3C/svg%3E">
+
+  <style>
+    :root {
+      --roxo-escuro: #270949;
+      --roxo-medio: #87148C;
+      --roxo-vivo: #4F1295;
+      --laranja-vibrante: #FF3D00;
+      --laranja-claro: #FF9200;
+      --branco: #FFFFFF;
+      --cinza: #dcdcdc;
+      --cinza-escuro: #555;
+      --bg-gradiente: linear-gradient(135deg, var(--roxo-escuro), var(--roxo-vivo), var(--roxo-medio));
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: var(--bg-gradiente);
+      background-size: 200% 200%;
+      animation: gradientShift 20s ease infinite;
+      color: var(--branco);
+      margin: 0; padding: 0; min-height: 100vh;
+      display: flex; flex-direction: column;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    header {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.5rem 2rem; background: rgba(0, 0, 0, 0.2); backdrop-filter: blur(10px);
+    }
+
+    .logo { display: flex; align-items: center; gap: 12px; }
+    .logo img { width: 45px; height: 45px; }
+    .brand { font-size: 1.6rem; font-weight: 700; color: var(--branco); }
+
+    .header-right { display: flex; align-items: center; gap: 20px; }
+
+    .user-menu {
+      display: flex; align-items: center; gap: 12px;
+      background: rgba(255, 255, 255, 0.1); padding: 8px 16px;
+      border-radius: 25px; cursor: pointer; transition: all 0.3s;
+    }
+    .user-menu:hover { background: rgba(255, 255, 255, 0.2); }
+
+    .user-avatar {
+      width: 35px; height: 35px; border-radius: 50%;
+      background: var(--laranja-vibrante); display: flex;
+      align-items: center; justify-content: center;
+      font-weight: 700; font-size: 16px; color: white;
+    }
+
+    .user-name { font-weight: 600; font-size: 14px; }
+
+    .logout-btn {
+      background: var(--laranja-vibrante); color: var(--branco);
+      border: none; padding: 10px 24px; border-radius: 8px;
+      cursor: pointer; font-weight: 600; font-size: 14px;
+      transition: 0.3s; font-family: 'Montserrat', sans-serif;
+    }
+    .logout-btn:hover {
+      background: var(--laranja-claro); transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(255, 61, 0, 0.4);
+    }
+
+    main {
+      flex: 1; padding: 2.5rem 2rem;
+      display: flex; flex-direction: column; align-items: center;
+    }
+
+    .welcome-section { width: 100%; max-width: 1200px; margin-bottom: 2rem; }
+    .welcome-title { font-size: 2.2rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .welcome-subtitle { font-size: 1rem; opacity: 0.9; font-weight: 400; }
+
+    .systems-title {
+      font-size: 1.5rem; font-weight: 600; margin-bottom: 1.5rem;
+      width: 100%; max-width: 1200px;
+    }
+
+    .grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem; width: 100%; max-width: 1200px;
+    }
+
+    .card {
+      position: relative; background: rgba(255, 255, 255, 0.1);
+      border-radius: 16px; overflow: hidden; cursor: pointer;
+      transition: transform 0.3s, box-shadow 0.3s; height: 180px;
+      display: flex; justify-content: center; align-items: center;
+      backdrop-filter: blur(10px);
+    }
+    .card:hover { transform: translateY(-6px); box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3); }
+
+    .card.locked { background: rgba(100, 100, 100, 0.3); cursor: not-allowed; }
+    .card.locked::after {
+      content: "🔒 Não liberado"; position: absolute; font-weight: 600;
+      color: #fff; background: rgba(0, 0, 0, 0.6); font-size: 13px;
+      border-radius: 8px; padding: 8px 12px; bottom: 12px;
+      left: 50%; transform: translateX(-50%);
+    }
+
+    .card.unlocked { background: linear-gradient(135deg, var(--laranja-vibrante), var(--laranja-claro)); }
+    .card.unlocked h2 {
+      color: #fff; font-weight: 700; font-size: 1.3rem;
+      text-align: center; text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    footer {
+      text-align: center; padding: 1.5rem; font-size: 0.85rem;
+      opacity: 0.7; background: rgba(0, 0, 0, 0.2);
+    }
+
+    @media (max-width: 768px) {
+      header { flex-direction: column; gap: 15px; padding: 1rem; }
+      .header-right { width: 100%; justify-content: space-between; }
+      .welcome-title { font-size: 1.8rem; }
+      .grid { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Cdefs%3E%3Cstyle%3E.cls-1%7Bfill:%23270949;%7D.cls-2%7Bfill:%23ff3d00;%7D.cls-3%7Bfill:%23fff;%7D%3C/style%3E%3C/defs%3E%3Cpath class='cls-1' d='M140,180 L140,120 Q140,50 200,50 L200,50 Q260,50 260,120 L260,180' stroke='%23270949' stroke-width='28' fill='none' stroke-linecap='round'/%3E%3Crect class='cls-2' x='100' y='170' width='200' height='180' rx='25'/%3E%3Ccircle class='cls-3' cx='200' cy='250' r='30'/%3E%3Crect class='cls-3' x='185' y='250' width='30' height='60' rx='8'/%3E%3C/svg%3E" alt="Upperfy Logo">
+      <div class="brand">Upperfy</div>
+    </div>
+    <div class="header-right">
+      <div class="user-menu">
+        <div class="user-avatar" id="userAvatar">U</div>
+        <span class="user-name" id="userName">Meu Perfil</span>
+      </div>
+      <button class="logout-btn" onclick="logout()">Sair</button>
+    </div>
+  </header>
+
+  <main>
+    <div class="welcome-section">
+      <h1 class="welcome-title" id="welcomeTitle">Bem-vindo!</h1>
+      <p class="welcome-subtitle" id="welcomeSubtitle">Acesse seus sistemas disponíveis</p>
+    </div>
+
+    <h2 class="systems-title">Seus sistemas</h2>
+    
+    <div class="grid">
+      <!-- SISTEMA CLOCKFY COM REDIRECIONAMENTO SSO -->
+      <div class="card unlocked" onclick="acessarSistema('clockfy', 'https://clockfy.upperfy.com.br')">
+        <h2>Clockfy</h2>
+      </div>
+      
+      <div class="card unlocked" onclick="acessarSistema('upperchat', 'https://chat.upperfy.com.br')">
+        <h2>UpperChat</h2>
+      </div>
+      
+      <div class="card unlocked" onclick="acessarSistema('uppercrm', 'https://crm.upperfy.com.br')">
+        <h2>UpperCRM</h2>
+      </div>
+
+      <!-- Sistemas Não Liberados -->
+      <div class="card locked"></div>
+      <div class="card locked"></div>
+      <div class="card locked"></div>
+      <div class="card locked"></div>
+      <div class="card locked"></div>
+      <div class="card locked"></div>
+      <div class="card locked"></div>
+      <div class="card locked"></div>
+      <div class="card locked"></div>
+    </div>
+  </main>
+
+  <footer>
+    © 2025 Upperfy - Todos os direitos reservados
+  </footer>
+
+  <script>
+    // 1. VERIFICA SE O USUÁRIO ESTÁ LOGADO
+    const autenticado = localStorage.getItem('autenticado');
+    const idFuncionario = localStorage.getItem('id_funcionario');
+    const usuarioNome = localStorage.getItem('usuario_nome');
+    const empresaNome = localStorage.getItem('empresa_nome');
+
+    if (autenticado !== 'true' || !idFuncionario) {
+      window.location.href = '../index.html';
+    }
+
+    // 2. PREENCHE DADOS NA TELA
+    window.addEventListener('DOMContentLoaded', () => {
+      const welcomeTitle = document.getElementById('welcomeTitle');
+      const welcomeSubtitle = document.getElementById('welcomeSubtitle');
+      const userName = document.getElementById('userName');
+      const userAvatar = document.getElementById('userAvatar');
+
+      if (usuarioNome) {
+        const primeiroNome = usuarioNome.split(' ')[0];
+        welcomeTitle.textContent = `Bem-vindo, ${primeiroNome}!`;
+        userName.textContent = primeiroNome;
+        userAvatar.textContent = primeiroNome.charAt(0).toUpperCase();
+      }
+
+      if (empresaNome) {
+        welcomeSubtitle.textContent = `${empresaNome} - Acesse seus sistemas disponíveis`;
+      }
+    });
+
+    // 3. FUNÇÃO INTELIGENTE DE ACESSO (SSO)
+    function acessarSistema(sistema, url) {
+      if (sistema === 'clockfy') {
+          const rawUser = localStorage.getItem('usuario');
+          
+          if(!rawUser) {
+              alert('Sessão inválida. Faça login novamente.');
+              return;
+          }
+
+          const token = btoa(rawUser);
+          window.location.href = `${url}?auth_data=${token}`;
+          return;
+      }
+      window.location.href = url;
+    }
+
+    function logout() {
+      if (confirm('Deseja realmente sair?')) {
+        localStorage.clear();
+        window.location.href = '../index.html';
+      }
+    }
+  </script>
+</body>
+</html>
