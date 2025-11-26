@@ -158,6 +158,7 @@
     
     <div class="grid">
       <!-- SISTEMA CLOCKFY COM REDIRECIONAMENTO SSO -->
+      <!-- Nota: Este link leva para o subdomínio clockfy, passando os dados de auth na URL -->
       <div class="card unlocked" onclick="acessarSistema('clockfy', 'https://clockfy.upperfy.com.br')">
         <h2>Clockfy</h2>
       </div>
@@ -189,11 +190,13 @@
 
   <script>
     // 1. VERIFICA SE O USUÁRIO ESTÁ LOGADO
+    // Verifica no localStorage da PLATAFORMA
     const autenticado = localStorage.getItem('autenticado');
     const idFuncionario = localStorage.getItem('id_funcionario');
     const usuarioNome = localStorage.getItem('usuario_nome');
     const empresaNome = localStorage.getItem('empresa_nome');
 
+    // Se não tiver os dados, manda de volta para o login da Plataforma
     if (autenticado !== 'true' || !idFuncionario) {
       window.location.href = '../index.html';
     }
@@ -224,19 +227,26 @@
           
           if(!rawUser) {
               alert('Sessão inválida. Faça login novamente.');
+              logout();
               return;
           }
 
+          // Codifica os dados do usuário em Base64 para enviar na URL
           const token = btoa(rawUser);
+          
+          // Redireciona para o subdomínio clockfy levando o token
           window.location.href = `${url}?auth_data=${token}`;
           return;
       }
+      
+      // Para outros sistemas
       window.location.href = url;
     }
 
     function logout() {
       if (confirm('Deseja realmente sair?')) {
         localStorage.clear();
+        // Volta para a raiz (Login da Plataforma)
         window.location.href = '../index.html';
       }
     }
