@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upperfy - Login</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Cdefs%3E%3Cstyle%3E.cls-1%7Bfill:%23270949;%7D.cls-2%7Bfill:%23ff3d00;%7D.cls-3%7Bfill:%23fff;%7D%3C/style%3E%3C/defs%3E%3Cpath class='cls-1' d='M140,170 L140,130 Q140,70 200,70 L200,70 Q260,70 260,130 L260,170' stroke='%23270949' stroke-width='20' fill='none'/%3E%3Crect class='cls-2' x='110' y='160' width='180' height='160' rx='20'/%3E%3Ccircle class='cls-3' cx='200' cy='240' r='25'/%3E%3Crect class='cls-3' x='190' y='240' width='20' height='50' rx='5'/%3E%3C/svg%3E">
+    
+    <style>
+        /* ========================================
+           RESET E CONFIGURAÇÕES GLOBAIS
+           ======================================== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --roxo-escuro: #270949;
+            --roxo-medio: #87148C;
+            --roxo-vivo: #4F1295;
+            --laranja-vibrante: #FF3D00;
+            --laranja-claro: #FF9200;
+            --branco: #FFFFFF;
+            --cinza-suave: #F4F4F9;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: linear-gradient(135deg, var(--roxo-escuro) 0%, var(--roxo-vivo) 50%, var(--roxo-medio) 100%);
+            background-size: 200% 200%;
+            animation: gradientShift 15s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 420px;
+            animation: fadeIn 0.6s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .login-card {
+            background: var(--branco);
+            border-radius: 20px;
+            padding: 50px 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-card::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%; width: 200%; height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 61, 0, 0.05), transparent);
+            transform: rotate(45deg);
+            animation: shine 8s ease-in-out infinite;
+        }
+
+        @keyframes shine {
+            0%, 100% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            50% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .logo-section {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo-section img {
+            width: 100px; height: auto; margin-bottom: 20px;
+            animation: logoFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes logoFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .brand-name {
+            font-size: 32px; font-weight: 700; color: var(--roxo-escuro); margin-bottom: 8px;
+        }
+
+        .page-title {
+            font-size: 24px; font-weight: 700; color: var(--roxo-escuro); margin-bottom: 10px;
+        }
+
+        .page-subtitle {
+            font-size: 14px; color: #666; font-weight: 400;
+        }
+
+        .login-form { position: relative; z-index: 1; }
+        .form-group { margin-bottom: 25px; }
+
+        label {
+            display: block; font-size: 14px; font-weight: 500; color: var(--roxo-escuro); margin-bottom: 8px;
+        }
+
+        .input-wrapper { position: relative; }
+
+        input[type="email"], input[type="password"] {
+            width: 100%; padding: 16px 20px; border: 2px solid #e0e0e0; border-radius: 10px;
+            font-size: 15px; font-family: 'Montserrat', sans-serif; font-weight: 400;
+            color: var(--roxo-escuro); transition: all 0.3s ease; background: var(--cinza-suave);
+        }
+
+        input[type="email"]:focus, input[type="password"]:focus {
+            outline: none; border-color: var(--roxo-medio); background: var(--branco);
+            box-shadow: 0 0 0 4px rgba(135, 20, 140, 0.1);
+        }
+
+        input::placeholder { color: #999; font-weight: 400; }
+
+        .btn-login {
+            width: 100%; padding: 18px; border: none; border-radius: 10px;
+            font-size: 16px; font-weight: 700; font-family: 'Montserrat', sans-serif;
+            color: var(--branco); background: linear-gradient(135deg, var(--laranja-vibrante), var(--laranja-claro));
+            cursor: pointer; transition: all 0.3s ease; position: relative; overflow: hidden; margin-top: 30px;
+        }
+
+        .btn-login::before {
+            content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+            background: linear-gradient(135deg, var(--roxo-vivo), var(--roxo-medio));
+            transition: left 0.4s ease;
+        }
+
+        .btn-login span { position: relative; z-index: 1; }
+        .btn-login:hover::before { left: 0; }
+        .btn-login:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(255, 61, 0, 0.4); }
+        .btn-login:active { transform: translateY(0); }
+        .btn-login:disabled { background: #ccc; cursor: not-allowed; transform: none; }
+        .btn-login:disabled::before { display: none; }
+
+        .btn-spinner {
+            display: none; width: 18px; height: 18px; border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top-color: var(--branco); border-radius: 50%; animation: spin 0.8s linear infinite; margin-left: 10px;
+        }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .btn-login.loading .btn-spinner { display: inline-block; }
+
+        .error-message {
+            background: rgba(255, 61, 0, 0.1); border: 1px solid var(--laranja-vibrante); color: var(--laranja-vibrante);
+            padding: 12px 16px; border-radius: 8px; font-size: 14px; font-weight: 500; text-align: center;
+            margin-top: 20px; display: none; animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .error-message.show { display: block; }
+
+        .footer-text {
+            text-align: center; margin-top: 30px; font-size: 12px; color: rgba(255, 255, 255, 0.7);
+        }
+
+        @media (max-width: 480px) {
+            .login-card { padding: 40px 30px; }
+            .brand-name { font-size: 28px; }
+            .page-title { font-size: 20px; }
+            .logo-section img { width: 80px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-card">
+            <div class="logo-section">
+                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Cdefs%3E%3Cstyle%3E.cls-1%7Bfill:%23270949;%7D.cls-2%7Bfill:%23ff3d00;%7D.cls-3%7Bfill:%23fff;%7D%3C/style%3E%3C/defs%3E%3Cpath class='cls-1' d='M140,180 L140,120 Q140,50 200,50 L200,50 Q260,50 260,120 L260,180' stroke='%23270949' stroke-width='28' fill='none' stroke-linecap='round'/%3E%3Crect class='cls-2' x='100' y='170' width='200' height='180' rx='25'/%3E%3Ccircle class='cls-3' cx='200' cy='250' r='30'/%3E%3Crect class='cls-3' x='185' y='250' width='30' height='60' rx='8'/%3E%3C/svg%3E" alt="Upperfy Logo">
+                <div class="brand-name">Upperfy</div>
+                <p class="page-subtitle">Plataforma Exclusiva</p>
+                <p class="page-subtitle" style="font-size: 12px; margin-top: 5px; color: #999;">Powered by <strong style="color: var(--roxo-escuro);">Upperfy</strong></p>
+                <h1 class="page-title" style="margin-top: 20px;">Acesse sua conta</h1>
+            </div>
+
+            <form class="login-form" id="loginForm">
+                <div class="form-group">
+                    <label for="email">E-mail</label>
+                    <div class="input-wrapper">
+                        <input type="email" id="email" name="email" placeholder="Seu e-mail corporativo" required autocomplete="email">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="senha">Senha</label>
+                    <div class="input-wrapper">
+                        <input type="password" id="senha" name="senha" placeholder="Sua senha de acesso" required autocomplete="current-password">
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-login" id="btnLogin">
+                    <span id="btnText">Entrar</span>
+                    <div class="btn-spinner"></div>
+                </button>
+
+                <div class="error-message" id="errorMessage">
+                    E-mail ou senha inválidos
+                </div>
+            </form>
+        </div>
+
+        <div class="footer-text">
+            © 2025 Upperfy - Todos os direitos reservados
+        </div>
+    </div>
+
+    <script>
+        const WEBHOOK_URL = "https://n8n.upperfy.com.br/webhook/b45a3be4-1f27-4b01-b341-loginplataforma4";
+
+        const loginForm = document.getElementById('loginForm');
+        const emailInput = document.getElementById('email');
+        const senhaInput = document.getElementById('senha');
+        const btnLogin = document.getElementById('btnLogin');
+        const btnText = document.getElementById('btnText');
+        const errorMessage = document.getElementById('errorMessage');
+
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            errorMessage.classList.remove('show');
+
+            const email = emailInput.value.trim();
+            const senha = senhaInput.value;
+
+            if (!email || !senha) {
+                showError('Por favor, preencha todos os campos');
+                return;
+            }
+
+            setLoadingState(true);
+
+            try {
+                const response = await fetch(WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, senha })
+                });
+
+                const data = await response.json();
+
+                if (data.autenticado === true) {
+                    localStorage.clear();
+                    
+                    // Salva chaves importantes individualmente
+                    localStorage.setItem('autenticado', 'true');
+                    if (data.token) localStorage.setItem('token', data.token);
+                    if (data.id_funcionario || data.idFuncionario) localStorage.setItem('id_funcionario', data.id_funcionario || data.idFuncionario);
+                    if (data.id_empresa || data.idEmpresa) localStorage.setItem('id_empresa', data.id_empresa || data.idEmpresa);
+                    
+                    // Salva objeto completo do usuário
+                    if (data.usuario) {
+                        localStorage.setItem('usuario', JSON.stringify(data.usuario));
+                        if (data.usuario.nome) localStorage.setItem('usuario_nome', data.usuario.nome);
+                        if (data.usuario.email) localStorage.setItem('usuario_email', data.usuario.email);
+                        if (data.usuario.cargo) localStorage.setItem('usuario_cargo', data.usuario.cargo);
+                        if (data.usuario.nivel_acesso) localStorage.setItem('role', data.usuario.nivel_acesso);
+                        if (data.usuario.role) localStorage.setItem('role', data.usuario.role);
+                    }
+                    
+                    if (data.empresa && (data.empresa.nome || data.empresa.razao_social)) {
+                        localStorage.setItem('empresa_nome', data.empresa.nome || data.empresa.razao_social);
+                    }
+
+                    btnText.textContent = 'Sucesso! Redirecionando...';
+                    
+                    setTimeout(() => {
+                        // CAMINHO CORRIGIDO PARA O DASHBOARD
+                        window.location.href = 'area-restrita/dashboard.html';
+                    }, 800);
+                } else {
+                    showError(data.mensagem || 'E-mail ou senha inválidos');
+                    setLoadingState(false);
+                }
+            } catch (error) {
+                console.error('Erro ao fazer login:', error);
+                showError('Erro de conexão. Tente novamente.');
+                setLoadingState(false);
+            }
+        });
+
+        function setLoadingState(isLoading) {
+            if (isLoading) {
+                btnLogin.disabled = true;
+                btnLogin.classList.add('loading');
+                btnText.textContent = 'Validando...';
+            } else {
+                btnLogin.disabled = false;
+                btnLogin.classList.remove('loading');
+                btnText.textContent = 'Entrar';
+            }
+        }
+
+        function showError(message) {
+            errorMessage.textContent = message;
+            errorMessage.classList.add('show');
+            setTimeout(() => { errorMessage.classList.remove('show'); }, 5000);
+        }
+
+        emailInput.addEventListener('input', () => errorMessage.classList.remove('show'));
+        senhaInput.addEventListener('input', () => errorMessage.classList.remove('show'));
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const autenticado = localStorage.getItem('autenticado');
+            const idFuncionario = localStorage.getItem('id_funcionario');
+            
+            if (autenticado === 'true' && idFuncionario) {
+                // CAMINHO CORRIGIDO PARA O DASHBOARD
+                window.location.href = 'area-restrita/dashboard.html';
+            }
+        });
+    </script>
+</body>
+</html>
