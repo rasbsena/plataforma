@@ -233,6 +233,13 @@
         const btnText = document.getElementById('btnText');
         const errorMessage = document.getElementById('errorMessage');
 
+        // Função para setar cookie compartilhado entre subdomínios
+        function setUpperfyCookie(data) {
+            const cookieData = JSON.stringify(data);
+            const expires = new Date(data.expira_em || Date.now() + 24 * 60 * 60 * 1000).toUTCString();
+            document.cookie = `upperfy_auth=${encodeURIComponent(cookieData)}; domain=.upperfy.com.br; path=/; expires=${expires}; Secure; SameSite=Lax`;
+        }
+
         loginForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             errorMessage.classList.remove('show');
@@ -278,6 +285,9 @@
                     if (data.empresa && (data.empresa.nome || data.empresa.razao_social)) {
                         localStorage.setItem('empresa_nome', data.empresa.nome || data.empresa.razao_social);
                     }
+
+                    // NOVO: Salva cookie compartilhado para outros subdomínios
+                    setUpperfyCookie(data);
 
                     btnText.textContent = 'Sucesso! Redirecionando...';
                     
