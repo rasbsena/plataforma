@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 180">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#041f43"/>
+      <stop offset="50%" style="stop-color:#0a3570"/>
+      <stop offset="100%" style="stop-color:#0d47a1"/>
+    </linearGradient>
+    <linearGradient id="sunGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffcf00"/>
+      <stop offset="100%" style="stop-color:#f59e0b"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="320" height="180" fill="url(#bgGrad)"/>
+  
+  <!-- Decorative circles -->
+  <circle cx="50" cy="20" r="50" fill="rgba(255,207,0,0.08)"/>
+  <circle cx="290" cy="160" r="45" fill="rgba(255,207,0,0.06)"/>
+  
+  <!-- Sun logo -->
+  <g transform="translate(160, 65)">
+    <!-- Sun rays -->
+    <line x1="0" y1="-25" x2="0" y2="-42" stroke="url(#sunGrad)" stroke-width="4" stroke-linecap="round"/>
+    <line x1="0" y1="-25" x2="-18" y2="-38" stroke="url(#sunGrad)" stroke-width="4" stroke-linecap="round"/>
+    <line x1="0" y1="-25" x2="18" y2="-38" stroke="url(#sunGrad)" stroke-width="4" stroke-linecap="round"/>
+    <line x1="0" y1="-25" x2="-28" y2="-25" stroke="url(#sunGrad)" stroke-width="4" stroke-linecap="round"/>
+    <line x1="0" y1="-25" x2="28" y2="-25" stroke="url(#sunGrad)" stroke-width="4" stroke-linecap="round"/>
+    <line x1="0" y1="-25" x2="-22" y2="-15" stroke="url(#sunGrad)" stroke-width="4" stroke-linecap="round"/>
+    <line x1="0" y1="-25" x2="22" y2="-15" stroke="url(#sunGrad)" stroke-width="4" stroke-linecap="round"/>
+    
+    <!-- Sun circle (horizon) -->
+    <circle cx="0" cy="0" r="18" stroke="url(#sunGrad)" stroke-width="4" fill="none"/>
+    
+    <!-- Horizon line -->
+    <line x1="-32" y1="0" x2="32" y2="0" stroke="url(#sunGrad)" stroke-width="4" stroke-linecap="round"/>
+  </g>
+  
+  <!-- System name -->
+  <text x="160" y="145" text-anchor="middle" font-family="Oswald, Arial, sans-serif" font-size="26" font-weight="700" fill="#FFFFFF" letter-spacing="3">LUSOFY</text>
+  
+  <!-- Subtitle -->
+  <text x="160" y="165" text-anchor="middle" font-family="Montserrat, Arial, sans-serif" font-size="10" fill="rgba(255,255,255,0.7)">Gestão de Tarefas OTA</text>
+</svg>
