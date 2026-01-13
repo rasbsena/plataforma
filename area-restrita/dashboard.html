@@ -92,10 +92,90 @@
       width: 100%; max-width: 1400px;
     }
 
+    /* === BARRA DE PESQUISA E FILTROS === */
+    .search-filter-bar {
+      display: flex;
+      gap: 1rem;
+      width: 100%;
+      max-width: 1400px;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .search-input-wrapper {
+      flex: 1;
+      min-width: 250px;
+      position: relative;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 14px 20px 14px 50px;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      border-radius: 10px;
+      font-size: 15px;
+      font-family: 'Montserrat', sans-serif;
+      color: var(--branco);
+      background: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+    }
+
+    .search-input::placeholder {
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: var(--laranja-vibrante);
+      background: rgba(0, 0, 0, 0.5);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 18px;
+      opacity: 0.7;
+    }
+
+    .filter-btn {
+      padding: 14px 24px;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      font-family: 'Montserrat', sans-serif;
+      color: var(--branco);
+      background: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(10px);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .filter-btn:hover {
+      background: rgba(0, 0, 0, 0.5);
+      border-color: rgba(255, 255, 255, 0.4);
+    }
+
+    .filter-btn.active {
+      background: var(--laranja-vibrante);
+      border-color: var(--laranja-vibrante);
+    }
+
+    .filter-btn.active:hover {
+      background: var(--laranja-claro);
+      border-color: var(--laranja-claro);
+    }
+
     .grid {
       display: grid; 
-      grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
-      gap: 2.5rem; 
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 2rem; 
       width: 100%; 
       max-width: 1400px;
     }
@@ -150,11 +230,12 @@
     /* Overlay de informações */
     .card-info {
       padding: 20px;
-      background: linear-gradient(transparent, rgba(0, 0, 0, 0.9));
+      background: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.7) 30%, rgba(0, 0, 0, 0.95) 100%);
       position: absolute;
       bottom: 0;
       left: 0;
       right: 0;
+      padding-top: 40px;
     }
 
     .card-title {
@@ -326,6 +407,17 @@
 
     <h2 class="systems-title">Seus sistemas</h2>
     
+    <!-- Barra de pesquisa e filtros -->
+    <div class="search-filter-bar">
+      <div class="search-input-wrapper">
+        <span class="search-icon">🔍</span>
+        <input type="text" class="search-input" id="searchInput" placeholder="Pesquisar por nome...">
+      </div>
+      <button class="filter-btn" id="filterAtivos" onclick="toggleFiltroAtivos()">
+        <span>✓</span> Só ativos
+      </button>
+    </div>
+    
     <!-- Container dinâmico dos cards -->
     <div id="sistemasContainer">
       <!-- Loading inicial -->
@@ -348,6 +440,10 @@
     const idFuncionario = localStorage.getItem('id_funcionario');
     const usuarioNome = localStorage.getItem('usuario_nome');
     const empresaNome = localStorage.getItem('empresa_nome');
+
+    // Variáveis para pesquisa e filtro
+    let sistemasCarregados = [];
+    let filtroAtivosAtivo = false;
 
     // Se não tiver os dados, manda de volta para o login da Plataforma
     if (autenticado !== 'true' || !idFuncionario) {
@@ -376,6 +472,9 @@
 
       // Carrega os sistemas do n8n
       carregarSistemas();
+
+      // Evento de pesquisa
+      document.getElementById('searchInput').addEventListener('input', aplicarFiltros);
     });
 
     // ==========================================
@@ -411,6 +510,9 @@
         if (!dados.sistemas || !Array.isArray(dados.sistemas)) {
           throw new Error('Formato de resposta inválido');
         }
+
+        // Salva os sistemas na variável global
+        sistemasCarregados = dados.sistemas;
 
         // Renderiza os cards
         renderizarCards(dados.sistemas);
@@ -508,6 +610,45 @@
         desc.classList.add('truncated');
         btn.textContent = 'Ver mais';
       }
+    }
+
+    // ==========================================
+    // 4.3. FUNÇÃO PARA TOGGLE DO FILTRO ATIVOS
+    // ==========================================
+    function toggleFiltroAtivos() {
+      filtroAtivosAtivo = !filtroAtivosAtivo;
+      const btn = document.getElementById('filterAtivos');
+      
+      if (filtroAtivosAtivo) {
+        btn.classList.add('active');
+      } else {
+        btn.classList.remove('active');
+      }
+      
+      aplicarFiltros();
+    }
+
+    // ==========================================
+    // 4.4. FUNÇÃO PARA APLICAR FILTROS
+    // ==========================================
+    function aplicarFiltros() {
+      const termoPesquisa = document.getElementById('searchInput').value.toLowerCase().trim();
+      
+      let sistemasFiltrados = sistemasCarregados;
+      
+      // Filtro por nome
+      if (termoPesquisa) {
+        sistemasFiltrados = sistemasFiltrados.filter(sistema => 
+          sistema.nome.toLowerCase().includes(termoPesquisa)
+        );
+      }
+      
+      // Filtro só ativos (não bloqueados)
+      if (filtroAtivosAtivo) {
+        sistemasFiltrados = sistemasFiltrados.filter(sistema => !sistema.bloqueado);
+      }
+      
+      renderizarCards(sistemasFiltrados);
     }
 
     // ==========================================
