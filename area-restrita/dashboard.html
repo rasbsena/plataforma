@@ -32,6 +32,7 @@
       color: var(--branco);
       margin: 0; padding: 0; min-height: 100vh;
       display: flex; flex-direction: column;
+      overflow-x: hidden;
     }
 
     @keyframes gradientShift {
@@ -42,7 +43,7 @@
 
     header {
       display: flex; justify-content: space-between; align-items: center;
-      padding: 1rem 1.5rem; background: rgba(0, 0, 0, 0.2); backdrop-filter: blur(10px);
+      padding: 1rem 2rem; background: rgba(0, 0, 0, 0.2); backdrop-filter: blur(10px);
     }
 
     .logo { display: flex; align-items: center; gap: 10px; }
@@ -79,17 +80,18 @@
     }
 
     main {
-      flex: 1; padding: 1.5rem 1.5rem;
+      flex: 1; padding: 1.5rem 2rem;
       display: flex; flex-direction: column; align-items: center;
+      max-width: 100%;
     }
 
-    .welcome-section { width: 100%; max-width: 1400px; margin-bottom: 1.5rem; }
+    .welcome-section { width: 100%; max-width: 1300px; margin: 0 auto 1.5rem; }
     .welcome-title { font-size: 1.8rem; font-weight: 700; margin-bottom: 0.3rem; }
     .welcome-subtitle { font-size: 0.9rem; opacity: 0.9; font-weight: 400; }
 
     .systems-title {
       font-size: 1.3rem; font-weight: 600; margin-bottom: 1.2rem;
-      width: 100%; max-width: 1400px;
+      width: 100%; max-width: 1300px; margin-left: auto; margin-right: auto;
     }
 
     /* === BARRA DE PESQUISA E FILTROS === */
@@ -97,8 +99,8 @@
       display: flex;
       gap: 0.8rem;
       width: 100%;
-      max-width: 1400px;
-      margin-bottom: 1.5rem;
+      max-width: 1300px;
+      margin: 0 auto 1.5rem;
       flex-wrap: wrap;
     }
 
@@ -174,10 +176,12 @@
 
     .grid {
       display: grid; 
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
       gap: 1.5rem; 
       width: 100%; 
-      max-width: 1400px;
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 0 1rem;
     }
 
     /* === CARD ESTILO NETFLIX === */
@@ -311,7 +315,8 @@
       justify-content: center;
       padding: 3rem 2rem;
       width: 100%;
-      max-width: 1400px;
+      max-width: 1300px;
+      margin: 0 auto;
     }
 
     .loading-spinner {
@@ -376,7 +381,7 @@
       header { flex-direction: column; gap: 15px; padding: 1rem; }
       .header-right { width: 100%; justify-content: space-between; }
       .welcome-title { font-size: 1.6rem; }
-      .grid { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.2rem; }
+      .grid { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.2rem; padding: 0; }
     }
 
     @media (max-width: 480px) {
