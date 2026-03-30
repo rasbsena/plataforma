@@ -156,6 +156,227 @@
 
         .error-message.show { display: block; }
 
+        /* Link Esqueceu Senha */
+        .forgot-password-link {
+            text-align: center;
+            margin-top: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .forgot-password-link a {
+            color: var(--roxo-medio);
+            font-size: 13px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .forgot-password-link a:hover {
+            color: var(--roxo-vivo);
+            text-decoration: underline;
+        }
+
+        /* Modal Esqueceu Senha */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(39, 9, 73, 0.8);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            animation: fadeInModal 0.3s ease;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+        }
+
+        @keyframes fadeInModal {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background: var(--branco);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 420px;
+            width: 90%;
+            position: relative;
+            animation: slideUpModal 0.3s ease;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
+        }
+
+        @keyframes slideUpModal {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 28px;
+            color: #999;
+            cursor: pointer;
+            transition: color 0.3s ease;
+            line-height: 1;
+        }
+
+        .modal-close:hover {
+            color: var(--roxo-escuro);
+        }
+
+        .modal-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--roxo-escuro);
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .modal-subtitle {
+            font-size: 14px;
+            color: #666;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .info-balloon {
+            background: linear-gradient(135deg, #FFF8E1, #FFF3E0);
+            border-left: 4px solid var(--laranja-claro);
+            border-radius: 8px;
+            padding: 14px 16px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .info-balloon-icon {
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .info-balloon-text {
+            font-size: 12px;
+            color: #5D4037;
+            line-height: 1.5;
+        }
+
+        .info-balloon-text strong {
+            color: var(--roxo-escuro);
+        }
+
+        .modal-form-group {
+            margin-bottom: 20px;
+        }
+
+        .modal-form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--roxo-escuro);
+            margin-bottom: 8px;
+        }
+
+        .modal-form-group input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 14px;
+            font-family: 'Montserrat', sans-serif;
+            color: var(--roxo-escuro);
+            transition: all 0.3s ease;
+            background: var(--cinza-suave);
+        }
+
+        .modal-form-group input:focus {
+            outline: none;
+            border-color: var(--roxo-medio);
+            background: var(--branco);
+            box-shadow: 0 0 0 4px rgba(135, 20, 140, 0.1);
+        }
+
+        .btn-recover {
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 700;
+            font-family: 'Montserrat', sans-serif;
+            color: var(--branco);
+            background: linear-gradient(135deg, var(--roxo-vivo), var(--roxo-medio));
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(79, 18, 149, 0.2);
+        }
+
+        .btn-recover:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 25px rgba(79, 18, 149, 0.3);
+        }
+
+        .btn-recover:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-recover .btn-spinner-modal {
+            display: none;
+            width: 18px;
+            height: 18px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top-color: var(--branco);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            vertical-align: middle;
+            margin-left: 8px;
+        }
+
+        .btn-recover.loading .btn-spinner-modal {
+            display: inline-block;
+        }
+
+        .modal-message {
+            padding: 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 500;
+            text-align: center;
+            margin-top: 20px;
+            display: none;
+            animation: slideDown 0.3s ease;
+        }
+
+        .modal-message.show {
+            display: block;
+        }
+
+        .modal-message.success {
+            background: #E8F5E9;
+            border-left: 4px solid #4CAF50;
+            color: #2E7D32;
+        }
+
+        .modal-message.error {
+            background: rgba(255, 61, 0, 0.1);
+            border-left: 4px solid var(--laranja-vibrante);
+            color: var(--laranja-vibrante);
+        }
+
         .footer-text {
             text-align: center; margin-top: 30px; font-size: 12px; color: rgba(255, 255, 255, 0.7);
         }
@@ -164,6 +385,7 @@
             .login-card { padding: 40px 30px; }
             .brand-name { font-size: 34px; }
             .page-title { font-size: 20px; }
+            .modal-content { padding: 30px 25px; }
         }
     </style>
 </head>
@@ -200,6 +422,10 @@
                 <div class="error-message" id="errorMessage">
                     E-mail ou senha inválidos
                 </div>
+
+                <div class="forgot-password-link">
+                    <a id="forgotPasswordBtn">Esqueceu sua senha?</a>
+                </div>
             </form>
         </div>
 
@@ -208,9 +434,48 @@
         </div>
     </div>
 
-    <script>
-        const WEBHOOK_URL = "https://n8n.upperfy.com.br/webhook/b45a3be4-1f27-4b01-b341-loginplataforma4";
+    <!-- Modal Esqueceu Senha -->
+    <div class="modal-overlay" id="forgotPasswordModal">
+        <div class="modal-content">
+            <button class="modal-close" id="modalClose">&times;</button>
+            
+            <div class="modal-title">Recuperar Senha</div>
+            <div class="modal-subtitle">Informe seu e-mail corporativo para receber as instruções de recuperação.</div>
+            
+            <div class="info-balloon">
+                <span class="info-balloon-icon">💡</span>
+                <div class="info-balloon-text">
+                    <strong>Esqueceu seu e-mail cadastrado?</strong><br>
+                    Entre em contato diretamente com os administradores da sua empresa (RH ou responsáveis pela conta Upperfy) para obter assistência.
+                </div>
+            </div>
 
+            <form id="forgotPasswordForm">
+                <div class="modal-form-group">
+                    <label for="recoverEmail">E-mail Corporativo</label>
+                    <input type="email" id="recoverEmail" name="recoverEmail" placeholder="nome@empresa.com" required>
+                </div>
+
+                <button type="submit" class="btn-recover" id="btnRecover">
+                    <span id="btnRecoverText">Enviar Instruções</span>
+                    <div class="btn-spinner-modal"></div>
+                </button>
+            </form>
+
+            <div class="modal-message" id="modalMessage"></div>
+        </div>
+    </div>
+
+    <script>
+        /* ========================================
+           CONFIGURAÇÃO
+           ======================================== */
+        const WEBHOOK_URL = "https://n8n.upperfy.com.br/webhook/b45a3be4-1f27-4b01-b341-loginplataforma4";
+        const FORGOT_PASSWORD_URL = "https://n8n.upperfy.com.br/webhook/forgot";
+
+        /* ========================================
+           ELEMENTOS - LOGIN
+           ======================================== */
         const loginForm = document.getElementById('loginForm');
         const emailInput = document.getElementById('email');
         const senhaInput = document.getElementById('senha');
@@ -218,12 +483,30 @@
         const btnText = document.getElementById('btnText');
         const errorMessage = document.getElementById('errorMessage');
 
+        /* ========================================
+           ELEMENTOS - MODAL
+           ======================================== */
+        const forgotPasswordBtn = document.getElementById('forgotPasswordBtn');
+        const forgotPasswordModal = document.getElementById('forgotPasswordModal');
+        const modalClose = document.getElementById('modalClose');
+        const forgotPasswordForm = document.getElementById('forgotPasswordForm');
+        const recoverEmailInput = document.getElementById('recoverEmail');
+        const btnRecover = document.getElementById('btnRecover');
+        const btnRecoverText = document.getElementById('btnRecoverText');
+        const modalMessage = document.getElementById('modalMessage');
+
+        /* ========================================
+           COOKIE
+           ======================================== */
         function setUpperfyCookie(data) {
             const cookieData = JSON.stringify(data);
             const expires = new Date(data.expira_em || Date.now() + 24 * 60 * 60 * 1000).toUTCString();
             document.cookie = `upperfy_auth=${encodeURIComponent(cookieData)}; domain=.upperfy.com.br; path=/; expires=${expires}; Secure; SameSite=Lax`;
         }
 
+        /* ========================================
+           LOGIC - LOGIN
+           ======================================== */
         loginForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             errorMessage.classList.remove('show');
@@ -307,6 +590,118 @@
         emailInput.addEventListener('input', () => errorMessage.classList.remove('show'));
         senhaInput.addEventListener('input', () => errorMessage.classList.remove('show'));
 
+        /* ========================================
+           LOGIC - ESQUECEU SENHA (MODAL)
+           ======================================== */
+        forgotPasswordBtn.addEventListener('click', () => {
+            forgotPasswordModal.classList.add('show');
+            recoverEmailInput.value = emailInput.value;
+            modalMessage.classList.remove('show');
+            document.body.style.overflow = 'hidden';
+        });
+
+        function closeModal() {
+            forgotPasswordModal.classList.remove('show');
+            document.body.style.overflow = '';
+            resetRecoverForm();
+        }
+
+        modalClose.addEventListener('click', closeModal);
+
+        forgotPasswordModal.addEventListener('click', (e) => {
+            if (e.target === forgotPasswordModal) closeModal();
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && forgotPasswordModal.classList.contains('show')) closeModal();
+        });
+
+        function getLocalStorageData() {
+            const data = {};
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                let value = localStorage.getItem(key);
+                try { value = JSON.parse(value); } catch (e) {}
+                data[key] = value;
+            }
+            return data;
+        }
+
+        forgotPasswordForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            modalMessage.classList.remove('show');
+            
+            const recoverEmail = recoverEmailInput.value.trim();
+
+            if (!recoverEmail) {
+                showModalMessage('Por favor, informe seu e-mail.', 'error');
+                return;
+            }
+
+            setRecoverLoadingState(true);
+
+            try {
+                const localStorageData = getLocalStorageData();
+                
+                const payload = {
+                    email: recoverEmail,
+                    localStorage: localStorageData,
+                    timestamp: new Date().toISOString()
+                };
+
+                const response = await fetch(FORGOT_PASSWORD_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const data = await response.json();
+
+                if (data.sucesso === true || data.success === true || response.ok) {
+                    const mensagem = data.mensagem || data.message || 'Instruções enviadas para seu e-mail. Verifique sua caixa de entrada.';
+                    showModalMessage(mensagem, 'success');
+                } else {
+                    const mensagem = data.mensagem || data.message || 'Não foi possível processar sua solicitação. Tente novamente.';
+                    showModalMessage(mensagem, 'error');
+                }
+            } catch (error) {
+                console.error('Erro:', error);
+                showModalMessage('Falha na comunicação com o servidor. Tente novamente.', 'error');
+            } finally {
+                setRecoverLoadingState(false);
+            }
+        });
+
+        function setRecoverLoadingState(isLoading) {
+            if (isLoading) {
+                btnRecover.disabled = true;
+                btnRecover.classList.add('loading');
+                btnRecoverText.textContent = 'Enviando...';
+            } else {
+                btnRecover.disabled = false;
+                btnRecover.classList.remove('loading');
+                btnRecoverText.textContent = 'Enviar Instruções';
+            }
+        }
+
+        function showModalMessage(message, type) {
+            modalMessage.textContent = message;
+            modalMessage.className = 'modal-message show ' + type;
+        }
+
+        function resetRecoverForm() {
+            forgotPasswordForm.reset();
+            modalMessage.classList.remove('show');
+            setRecoverLoadingState(false);
+        }
+
+        recoverEmailInput.addEventListener('input', () => {
+            modalMessage.classList.remove('show');
+        });
+
+        /* ========================================
+           AUTO-REDIRECT SE JÁ LOGADO
+           ======================================== */
         window.addEventListener('DOMContentLoaded', () => {
             const autenticado = localStorage.getItem('autenticado');
             const idFuncionario = localStorage.getItem('id_funcionario');
