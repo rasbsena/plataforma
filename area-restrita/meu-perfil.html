@@ -224,27 +224,6 @@
             gap: 12px;
         }
 
-        .btn-back {
-            width: 100%;
-            padding: 14px;
-            background: linear-gradient(135deg, var(--roxo-vivo), var(--roxo-escuro));
-            color: white;
-            border: none;
-            border-radius: 12px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: transform 0.2s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-
-        .btn-back:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(39, 9, 73, 0.3);
-        }
-
         .btn-change-data {
             width: 100%;
             padding: 12px;
@@ -355,6 +334,14 @@
             </div>
 
             <div class="info-grid">
+
+                <div class="info-group">
+                    <label>Empresa</label>
+                    <div class="input-icon-wrapper">
+                        <i class="fas fa-building"></i>
+                        <input type="text" class="info-value" id="displayEmpresa" value="---" readonly>
+                    </div>
+                </div>
                 
                 <div class="info-group">
                     <label>E-mail Corporativo</label>
@@ -494,10 +481,6 @@
                 <button class="btn-change-pin" onclick="togglePinMode()">
                     <i class="fas fa-th"></i> Alterar PIN
                 </button>
-
-                <button class="btn-back" onclick="goBack()">
-                    <i class="fas fa-arrow-left"></i> Voltar para o Ponto
-                </button>
                 
                 <button class="btn-logout-profile" onclick="logout()">
                     <i class="fas fa-sign-out-alt"></i> Sair da Conta
@@ -515,7 +498,8 @@
         function getUsuarioData() {
             const dados = {
                 nome: null, email: null, nivel_acesso: null,
-                whatsapp: null, created_at: null, foto: null, id: null
+                whatsapp: null, created_at: null, foto: null, id: null,
+                empresa_nome: null
             };
 
             const possiveisChaves = [
@@ -545,6 +529,10 @@
                             dados.foto = obj.foto || obj.foto_perfil || obj.avatar;
                             dados.id = obj.id || obj.id_funcionario;
                         }
+                        // Empresa dentro do objeto principal
+                        if (obj.empresa) {
+                            dados.empresa_nome = obj.empresa.nomeempresa || obj.empresa.nome_empresa || obj.empresa.nome || obj.empresa.razao_social;
+                        }
                         if (dados.nome || dados.email) break;
                     } catch (e) {}
                 }
@@ -563,6 +551,9 @@
             if (!dados.nivel_acesso) dados.nivel_acesso = localStorage.getItem('nivel_acesso') || localStorage.getItem('cargo');
             if (!dados.whatsapp) dados.whatsapp = localStorage.getItem('whatsapp');
             if (!dados.id) dados.id = localStorage.getItem('id_funcionario');
+
+            // Fallback para nome da empresa
+            if (!dados.empresa_nome) dados.empresa_nome = localStorage.getItem('empresa_nome') || localStorage.getItem('nome_empresa');
 
             return dados;
         }
@@ -595,6 +586,9 @@
 
             const elRole = document.getElementById('displayRole');
             if(elRole) elRole.textContent = formatarNivelAcesso(usuario.nivel_acesso);
+
+            const elEmpresa = document.getElementById('displayEmpresa');
+            if(elEmpresa) elEmpresa.value = usuario.empresa_nome || 'Não informado';
 
             const elEmail = document.getElementById('displayEmail');
             if(elEmail) elEmail.value = usuario.email || 'Não informado';
@@ -842,10 +836,6 @@
             if(type === 'success' && text !== 'Validando e alterando senha...' && text !== 'Enviando solicitação...' && text !== 'Atualizando seus dados...') {
                 setTimeout(() => el.style.display = 'none', 5000);
             }
-        }
-
-        function goBack() {
-            window.location.href = 'clockfyregistro.html'; 
         }
 
         function logout() {
