@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Redefinir Senha - Clockfy</title>
+    <title>Redefinir Senha - Upperfy</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -239,7 +239,10 @@
             margin-bottom: 30px;
         }
 
-        .logo-section svg {
+        .logo-section img {
+            width: 70px;
+            height: 70px;
+            object-fit: contain;
             animation: pulseLogo 4s ease-in-out infinite;
         }
 
@@ -504,7 +507,7 @@
                     Este link de recuperação é inválido ou já expirou. 
                     Por favor, solicite uma nova recuperação de senha.
                 </p>
-                <a href="https://clockfy.upperfy.com.br" class="btn btn-secondary">
+                <a href="https://plataforma.upperfy.com.br" class="btn btn-secondary">
                     Voltar ao Login
                 </a>
             </div>
@@ -512,16 +515,8 @@
             <!-- Estado: Formulário -->
             <div class="state form-state" id="formState">
                 <div class="logo-section">
-                    <svg width="70" height="70" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="100" cy="100" r="90" stroke="#270949" stroke-width="12"/>
-                        <path d="M100 45V100L135 135" stroke="#FF3D00" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
-                        <circle cx="100" cy="100" r="8" fill="#270949"/>
-                        <circle cx="100" cy="25" r="4" fill="#87148C"/>
-                        <circle cx="175" cy="100" r="4" fill="#87148C"/>
-                        <circle cx="100" cy="175" r="4" fill="#87148C"/>
-                        <circle cx="25" cy="100" r="4" fill="#87148C"/>
-                    </svg>
-                    <div class="brand-name">Clockfy</div>
+                    <img src="assets/capas/icone-upperfy.png" alt="Upperfy" width="70" height="70">
+                    <div class="brand-name">Upperfy</div>
                     <p class="page-title">Redefinição de Senha</p>
                 </div>
 
@@ -578,7 +573,7 @@
                 </form>
 
                 <div class="back-to-login">
-                    <a href="https://clockfy.upperfy.com.br">← Voltar ao Login</a>
+                    <a href="https://plataforma.upperfy.com.br">← Voltar ao Login</a>
                 </div>
             </div>
 
@@ -595,7 +590,7 @@
                     Sua senha foi alterada com sucesso. 
                     Agora você pode acessar sua conta com a nova senha.
                 </p>
-                <a href="https://clockfy.upperfy.com.br" class="btn btn-primary">
+                <a href="https://plataforma.upperfy.com.br" class="btn btn-primary">
                     Acessar Minha Conta
                 </a>
             </div>
@@ -603,7 +598,7 @@
         </div>
 
         <div class="footer-text">
-            © 2025 Clockfy - Tecnologia em Gestão de Tempo
+            © 2025 Upperfy - Todos os direitos reservados.
         </div>
     </div>
 
@@ -613,7 +608,7 @@
            ======================================== */
         const VALIDAR_TOKEN_URL = "https://n8n.upperfy.com.br/webhook/validar-token";
         const REDEFINIR_SENHA_URL = "https://n8n.upperfy.com.br/webhook/a8bc2c3d-3920-4a73-8fa2-g0t31Stl";
-        const LOGIN_URL = "https://clockfy.upperfy.com.br";
+        const LOGIN_URL = "https://plataforma.upperfy.com.br";
 
         /* ========================================
            ELEMENTOS
