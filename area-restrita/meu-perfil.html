@@ -12,9 +12,6 @@
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234F1295' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'%3E%3C/circle%3E%3Cpolyline points='12 6 12 12 16 14'%3E%3C/polyline%3E%3C/svg%3E">
 
     <style>
-        /* ========================================
-           ESTILOS (Visual Glassmorphism)
-           ======================================== */
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
@@ -47,7 +44,6 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* Fundo Animado */
         .bg-shape {
             position: absolute;
             border-radius: 50%;
@@ -65,7 +61,6 @@
             100% { transform: translate(0, 0) rotate(360deg); }
         }
 
-        /* Container Principal */
         .container {
             width: 100%;
             max-width: 450px;
@@ -96,7 +91,6 @@
             background: linear-gradient(90deg, var(--laranja-vibrante), var(--roxo-vivo));
         }
 
-        /* Perfil Header */
         .profile-header {
             display: flex;
             flex-direction: column;
@@ -152,7 +146,6 @@
             border-radius: 20px;
         }
 
-        /* Grid de Informações */
         .info-grid {
             display: grid;
             gap: 20px;
@@ -210,12 +203,11 @@
             padding-left: 40px;
         }
 
-        /* Seção de Senha, PIN e Dados */
         .password-section, .pin-section, .data-section {
             margin-top: 20px;
             padding-top: 20px;
             border-top: 1px solid #eee;
-            display: none; /* Escondido por padrão */
+            display: none;
         }
         
         .password-section.active, .pin-section.active, .data-section.active {
@@ -225,7 +217,6 @@
 
         @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* Botões */
         .btn-container {
             margin-top: 30px;
             display: flex;
@@ -344,13 +335,6 @@
         }
         .message.success { background: #E8F5E9; color: #2E7D32; border: 1px solid #C8E6C9; }
         .message.error { background: #FFEBEE; color: #C62828; border: 1px solid #FFCDD2; }
-
-        .footer-text {
-            text-align: center;
-            margin-top: 25px;
-            font-size: 11px;
-            color: rgba(255, 255, 255, 0.7);
-        }
     </style>
 </head>
 <body>
@@ -521,10 +505,6 @@
             </div>
 
         </div>
-
-        <div class="footer-text">
-            © 2025 Clockfy - Perfil do Usuário
-        </div>
     </div>
 
     <script>
@@ -532,40 +512,22 @@
         const WEBHOOK_PIN = 'https://n8n.upperfy.com.br/webhook/atualizapin';
         const WEBHOOK_UPDATE = 'https://n8n.upperfy.com.br/webhook/clock4';
 
-        // ========================================
-        // FUNÇÃO ROBUSTA PARA BUSCAR DADOS
-        // ========================================
         function getUsuarioData() {
             const dados = {
-                nome: null,
-                email: null,
-                nivel_acesso: null,
-                whatsapp: null,
-                created_at: null,
-                foto: null,
-                id: null
+                nome: null, email: null, nivel_acesso: null,
+                whatsapp: null, created_at: null, foto: null, id: null
             };
 
-            // Lista de chaves possíveis no localStorage
             const possiveisChaves = [
-                'dadosLogin',
-                'loginData', 
-                'authData',
-                'usuario',
-                'user',
-                'userData',
-                'sessao',
-                'session'
+                'dadosLogin', 'loginData', 'authData', 'usuario',
+                'user', 'userData', 'sessao', 'session'
             ];
 
-            // Tenta encontrar o objeto principal
             for (const chave of possiveisChaves) {
                 const valor = localStorage.getItem(chave);
                 if (valor) {
                     try {
                         const obj = JSON.parse(valor);
-                        
-                        // Se tem objeto 'usuario' dentro (estrutura do JSON mostrado)
                         if (obj.usuario) {
                             dados.nome = obj.usuario.nome || obj.usuario.name;
                             dados.email = obj.usuario.email || obj.usuario.mail;
@@ -574,9 +536,7 @@
                             dados.created_at = obj.usuario.created_at || obj.usuario.createdAt || obj.usuario.data_criacao;
                             dados.foto = obj.usuario.foto || obj.usuario.foto_perfil || obj.usuario.avatar;
                             dados.id = obj.usuario.id || obj.id_funcionario;
-                        } 
-                        // Se é o próprio objeto usuario
-                        else if (obj.nome || obj.name || obj.email) {
+                        } else if (obj.nome || obj.name || obj.email) {
                             dados.nome = obj.nome || obj.name;
                             dados.email = obj.email || obj.mail;
                             dados.nivel_acesso = obj.nivel_acesso || obj.role || obj.cargo;
@@ -585,17 +545,11 @@
                             dados.foto = obj.foto || obj.foto_perfil || obj.avatar;
                             dados.id = obj.id || obj.id_funcionario;
                         }
-
-                        // Se encontrou dados, para de procurar
                         if (dados.nome || dados.email) break;
-
-                    } catch (e) {
-                        // Não é JSON válido, ignora
-                    }
+                    } catch (e) {}
                 }
             }
 
-            // Fallback: tenta chaves individuais com prefixo 'usuario_'
             if (!dados.nome) dados.nome = localStorage.getItem('usuario_nome');
             if (!dados.email) dados.email = localStorage.getItem('usuario_email');
             if (!dados.nivel_acesso) dados.nivel_acesso = localStorage.getItem('usuario_nivel_acesso') || localStorage.getItem('usuario_cargo');
@@ -604,7 +558,6 @@
             if (!dados.foto) dados.foto = localStorage.getItem('usuario_foto');
             if (!dados.id) dados.id = localStorage.getItem('id_funcionario');
 
-            // Fallback: tenta chaves diretas sem prefixo
             if (!dados.nome) dados.nome = localStorage.getItem('nome');
             if (!dados.email) dados.email = localStorage.getItem('email');
             if (!dados.nivel_acesso) dados.nivel_acesso = localStorage.getItem('nivel_acesso') || localStorage.getItem('cargo');
@@ -614,26 +567,17 @@
             return dados;
         }
 
-        // Função para formatar nível de acesso
         function formatarNivelAcesso(nivel) {
             if (!nivel) return 'Colaborador';
-            
             const mapeamento = {
-                'admin': 'Administrador',
-                'administrator': 'Administrador',
-                'user': 'Colaborador',
-                'colaborador': 'Colaborador',
-                'manager': 'Gerente',
-                'gerente': 'Gerente',
-                'supervisor': 'Supervisor',
-                'rh': 'RH',
-                'hr': 'RH'
+                'admin': 'Administrador', 'administrator': 'Administrador',
+                'user': 'Colaborador', 'colaborador': 'Colaborador',
+                'manager': 'Gerente', 'gerente': 'Gerente',
+                'supervisor': 'Supervisor', 'rh': 'RH', 'hr': 'RH'
             };
-
             return mapeamento[nivel.toLowerCase()] || nivel;
         }
 
-        // Função para coletar TODO o localStorage
         function getAllLocalStorage() {
             const data = {};
             for (let i = 0; i < localStorage.length; i++) {
@@ -643,30 +587,21 @@
             return data;
         }
 
-        // ========================================
-        // INICIALIZAÇÃO
-        // ========================================
         document.addEventListener('DOMContentLoaded', () => {
-            
             const usuario = getUsuarioData();
 
-            // Nome
             const elName = document.getElementById('displayName');
             if(elName) elName.textContent = usuario.nome || 'Não informado';
 
-            // Nível de acesso / Cargo
             const elRole = document.getElementById('displayRole');
             if(elRole) elRole.textContent = formatarNivelAcesso(usuario.nivel_acesso);
 
-            // Email
             const elEmail = document.getElementById('displayEmail');
             if(elEmail) elEmail.value = usuario.email || 'Não informado';
 
-            // WhatsApp
             const elWhatsapp = document.getElementById('displayWhatsapp');
             if(elWhatsapp) elWhatsapp.value = usuario.whatsapp || 'Não informado';
 
-            // Data de criação
             let dataFormatada = 'Não informado';
             if(usuario.created_at) {
                 try {
@@ -683,7 +618,6 @@
             const elDate = document.getElementById('displayDate');
             if(elDate) elDate.value = dataFormatada;
 
-            // Foto
             if (usuario.foto && usuario.foto.length > 10) {
                 const imgElement = document.getElementById('userPhoto');
                 const iconElement = document.getElementById('defaultAvatar');
@@ -697,9 +631,6 @@
             }
         });
 
-        // ========================================
-        // TOGGLES DE UI
-        // ========================================
         function toggleDataMode() {
             const dataSection = document.getElementById('dataSection');
             const passSection = document.getElementById('passwordSection');
@@ -715,11 +646,9 @@
                 document.getElementById('statusMessage').style.display = 'none';
             } else {
                 const usuario = getUsuarioData();
-                
                 document.getElementById('editName').value = usuario.nome || '';
                 document.getElementById('editEmail').value = usuario.email || '';
                 document.getElementById('editWhatsapp').value = usuario.whatsapp || '';
-                
                 dataSection.style.display = 'block';
                 dataSection.classList.add('active');
                 actions.style.display = 'none';
@@ -766,9 +695,6 @@
             }
         }
 
-        // ========================================
-        // LÓGICA DE ATUALIZAÇÃO DE DADOS
-        // ========================================
         async function savePersonalData() {
             const name = document.getElementById('editName').value.trim();
             const email = document.getElementById('editEmail').value.trim();
@@ -786,16 +712,12 @@
             }
 
             showMessage('Atualizando seus dados...', 'success');
-
             const authContext = getAllLocalStorage();
 
             try {
                 const payload = {
-                    funcionario_id: id,
-                    nome: name,
-                    email: email,
-                    whatsapp: whatsapp,
-                    auth_context: authContext,
+                    funcionario_id: id, nome: name, email: email,
+                    whatsapp: whatsapp, auth_context: authContext,
                     timestamp: new Date().toISOString()
                 };
 
@@ -811,11 +733,9 @@
                     localStorage.setItem('usuario_nome', name);
                     localStorage.setItem('usuario_email', email);
                     localStorage.setItem('usuario_whatsapp', whatsapp);
-                    
                     document.getElementById('displayName').textContent = name;
                     document.getElementById('displayEmail').value = email;
                     document.getElementById('displayWhatsapp').value = whatsapp;
-                    
                     showMessage(data.mensagem || 'Dados atualizados com sucesso!', 'success');
                     setTimeout(() => toggleDataMode(), 2000);
                 } else {
@@ -827,9 +747,6 @@
             }
         }
 
-        // ========================================
-        // LÓGICA DE SENHA
-        // ========================================
         async function savePassword() {
             const currentPass = document.getElementById('currentPass').value;
             const newPass = document.getElementById('newPass').value;
@@ -849,17 +766,13 @@
             }
 
             showMessage('Validando e alterando senha...', 'success');
-
             const authContext = getAllLocalStorage();
 
             try {
                 const payload = {
-                    id_funcionario: id,
-                    email: email,
-                    senha_atual: currentPass,
-                    nova_senha: newPass,
-                    confirmacao_senha: confirmPass,
-                    auth_context: authContext,
+                    id_funcionario: id, email: email,
+                    senha_atual: currentPass, nova_senha: newPass,
+                    confirmacao_senha: confirmPass, auth_context: authContext,
                     timestamp: new Date().toISOString()
                 };
 
@@ -886,9 +799,6 @@
             }
         }
 
-        // ========================================
-        // LÓGICA DE PIN
-        // ========================================
         async function requestPinUpdate() {
             const emailConfirm = document.getElementById('pinEmail').value;
             const passConfirm = document.getElementById('pinPassword').value;
@@ -898,15 +808,12 @@
             }
 
             showMessage('Enviando solicitação...', 'success');
-
             const authContext = getAllLocalStorage();
 
             try {
                 const payload = {
-                    email: emailConfirm,
-                    senha_validacao: passConfirm,
-                    auth_context: authContext,
-                    timestamp: new Date().toISOString()
+                    email: emailConfirm, senha_validacao: passConfirm,
+                    auth_context: authContext, timestamp: new Date().toISOString()
                 };
 
                 fetch(WEBHOOK_PIN, {
@@ -917,10 +824,8 @@
 
                 setTimeout(() => {
                     showMessage('Sua solicitação foi recebida e em caso de aprovação o novo pin será enviado no seu e-mail.', 'success');
-                    
                     document.getElementById('pinEmail').value = '';
                     document.getElementById('pinPassword').value = '';
-                    
                     setTimeout(() => togglePinMode(), 4000);
                 }, 1000);
 
@@ -934,7 +839,6 @@
             el.textContent = text;
             el.className = `message ${type}`;
             el.style.display = 'block';
-            
             if(type === 'success' && text !== 'Validando e alterando senha...' && text !== 'Enviando solicitação...' && text !== 'Atualizando seus dados...') {
                 setTimeout(() => el.style.display = 'none', 5000);
             }
