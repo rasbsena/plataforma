@@ -482,9 +482,16 @@
         <span class="search-icon">🔍</span>
         <input type="text" class="search-input" id="searchInput" placeholder="Pesquisar por nome...">
       </div>
-      <button class="filter-btn" id="filterAtivos" onclick="toggleFiltroAtivos()">
-        <span>✓</span> Só ativos
-      </button>
+<div class="filter-btn-wrapper">
+  <button class="filter-btn active" id="filterAtivos" onclick="toggleFiltroAtivos()">
+    <span>✓</span> Só ativos
+  </button>
+  <div class="filter-tooltip">
+    A Upperfy oferece diversos serviços que podem estar sendo utilizados <strong>direta ou indiretamente</strong> pela sua empresa.<br><br>
+    Apenas os serviços <strong>contratados</strong> ficam ativos nesta tela. Alguns serviços podem estar operando em segundo plano, mas para utilizá-los ativamente é necessário contratar.<br><br>
+    Para mais informações: <a href="mailto:agenciaupperfy@gmail.com">agenciaupperfy@gmail.com</a>
+  </div>
+</div>
     </div>
     
     <!-- Container dinâmico dos cards -->
