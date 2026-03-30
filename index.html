@@ -7,12 +7,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Cdefs%3E%3Cstyle%3E.cls-1%7Bfill:%23270949;%7D.cls-2%7Bfill:%23ff3d00;%7D.cls-3%7Bfill:%23fff;%7D%3C/style%3E%3C/defs%3E%3Cpath class='cls-1' d='M140,170 L140,130 Q140,70 200,70 L200,70 Q260,70 260,130 L260,170' stroke='%23270949' stroke-width='20' fill='none'/%3E%3Crect class='cls-2' x='110' y='160' width='180' height='160' rx='20'/%3E%3Ccircle class='cls-3' cx='200' cy='240' r='25'/%3E%3Crect class='cls-3' x='190' y='240' width='20' height='50' rx='5'/%3E%3C/svg%3E">
+    <link rel="icon" type="image/png" href="assets/capas/icone-upperfy.png">
     
     <style>
-        /* ========================================
-           RESET E CONFIGURAÇÕES GLOBAIS
-           ======================================== */
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
@@ -84,18 +81,8 @@
             z-index: 1;
         }
 
-        .logo-section img {
-            width: 100px; height: auto; margin-bottom: 20px;
-            animation: logoFloat 3s ease-in-out infinite;
-        }
-
-        @keyframes logoFloat {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-5px); }
-        }
-
         .brand-name {
-            font-size: 32px; font-weight: 700; color: var(--roxo-escuro); margin-bottom: 8px;
+            font-size: 42px; font-weight: 700; color: var(--roxo-escuro); margin-bottom: 8px;
         }
 
         .page-title {
@@ -175,9 +162,8 @@
 
         @media (max-width: 480px) {
             .login-card { padding: 40px 30px; }
-            .brand-name { font-size: 28px; }
+            .brand-name { font-size: 34px; }
             .page-title { font-size: 20px; }
-            .logo-section img { width: 80px; }
         }
     </style>
 </head>
@@ -185,7 +171,6 @@
     <div class="login-container">
         <div class="login-card">
             <div class="logo-section">
-                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Cdefs%3E%3Cstyle%3E.cls-1%7Bfill:%23270949;%7D.cls-2%7Bfill:%23ff3d00;%7D.cls-3%7Bfill:%23fff;%7D%3C/style%3E%3C/defs%3E%3Cpath class='cls-1' d='M140,180 L140,120 Q140,50 200,50 L200,50 Q260,50 260,120 L260,180' stroke='%23270949' stroke-width='28' fill='none' stroke-linecap='round'/%3E%3Crect class='cls-2' x='100' y='170' width='200' height='180' rx='25'/%3E%3Ccircle class='cls-3' cx='200' cy='250' r='30'/%3E%3Crect class='cls-3' x='185' y='250' width='30' height='60' rx='8'/%3E%3C/svg%3E" alt="Upperfy Logo">
                 <div class="brand-name">Upperfy</div>
                 <p class="page-subtitle">Plataforma Exclusiva</p>
                 <p class="page-subtitle" style="font-size: 12px; margin-top: 5px; color: #999;">Powered by <strong style="color: var(--roxo-escuro);">Upperfy</strong></p>
@@ -233,7 +218,6 @@
         const btnText = document.getElementById('btnText');
         const errorMessage = document.getElementById('errorMessage');
 
-        // Função para setar cookie compartilhado entre subdomínios
         function setUpperfyCookie(data) {
             const cookieData = JSON.stringify(data);
             const expires = new Date(data.expira_em || Date.now() + 24 * 60 * 60 * 1000).toUTCString();
@@ -266,13 +250,11 @@
                 if (data.autenticado === true) {
                     localStorage.clear();
                     
-                    // Salva chaves importantes individualmente
                     localStorage.setItem('autenticado', 'true');
                     if (data.token) localStorage.setItem('token', data.token);
                     if (data.id_funcionario || data.idFuncionario) localStorage.setItem('id_funcionario', data.id_funcionario || data.idFuncionario);
                     if (data.id_empresa || data.idEmpresa) localStorage.setItem('id_empresa', data.id_empresa || data.idEmpresa);
                     
-                    // Salva objeto completo do usuário
                     if (data.usuario) {
                         localStorage.setItem('usuario', JSON.stringify(data.usuario));
                         if (data.usuario.nome) localStorage.setItem('usuario_nome', data.usuario.nome);
@@ -282,17 +264,15 @@
                         if (data.usuario.role) localStorage.setItem('role', data.usuario.role);
                     }
                     
-                        if (data.empresa) {
-                            localStorage.setItem('empresa_nome', data.empresa.nomeempresa || data.empresa.nome_empresa || data.empresa.nome || data.empresa.razao_social || '');
-                        }
+                    if (data.empresa) {
+                        localStorage.setItem('empresa_nome', data.empresa.nomeempresa || data.empresa.nome_empresa || data.empresa.nome || data.empresa.razao_social || '');
+                    }
 
-                    // NOVO: Salva cookie compartilhado para outros subdomínios
                     setUpperfyCookie(data);
 
                     btnText.textContent = 'Sucesso! Redirecionando...';
                     
                     setTimeout(() => {
-                        // CAMINHO CORRIGIDO PARA O DASHBOARD
                         window.location.href = 'area-restrita/dashboard.html';
                     }, 800);
                 } else {
@@ -332,7 +312,6 @@
             const idFuncionario = localStorage.getItem('id_funcionario');
             
             if (autenticado === 'true' && idFuncionario) {
-                // CAMINHO CORRIGIDO PARA O DASHBOARD
                 window.location.href = 'area-restrita/dashboard.html';
             }
         });
