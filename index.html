@@ -282,9 +282,9 @@
                         if (data.usuario.role) localStorage.setItem('role', data.usuario.role);
                     }
                     
-                    if (data.empresa && (data.empresa.nome || data.empresa.razao_social)) {
-                        localStorage.setItem('empresa_nome', data.empresa.nome || data.empresa.razao_social);
-                    }
+                        if (data.empresa) {
+                            localStorage.setItem('empresa_nome', data.empresa.nomeempresa || data.empresa.nome_empresa || data.empresa.nome || data.empresa.razao_social || '');
+                        }
 
                     // NOVO: Salva cookie compartilhado para outros subdomínios
                     setUpperfyCookie(data);
