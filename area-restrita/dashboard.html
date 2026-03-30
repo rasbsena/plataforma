@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Cdefs%3E%3Cstyle%3E.cls-1%7Bfill:%23270949;%7D.cls-2%7Bfill:%23ff3d00;%7D.cls-3%7Bfill:%23fff;%7D%3C/style%3E%3C/defs%3E%3Cpath class='cls-1' d='M140,180 L140,120 Q140,50 200,50 L200,50 Q260,50 260,120 L260,180' stroke='%23270949' stroke-width='28' fill='none' stroke-linecap='round'/%3E%3Crect class='cls-2' x='100' y='170' width='200' height='180' rx='25'/%3E%3Ccircle class='cls-3' cx='200' cy='250' r='30'/%3E%3Crect class='cls-3' x='185' y='250' width='30' height='60' rx='8'/%3E%3C/svg%3E">
+  <link rel="icon" type="image/png" href="../assets/capas/icone-upperfy.png">
 
   <style>
     :root {
@@ -46,9 +46,8 @@
       padding: 1rem 2rem; background: rgba(0, 0, 0, 0.2); backdrop-filter: blur(10px);
     }
 
-    .logo { display: flex; align-items: center; gap: 10px; }
-    .logo img { width: 38px; height: 38px; }
-    .brand { font-size: 1.4rem; font-weight: 700; color: var(--branco); }
+    .logo { display: flex; align-items: center; }
+    .logo img { height: 36px; width: auto; }
 
     .header-right { display: flex; align-items: center; gap: 16px; }
 
@@ -94,7 +93,6 @@
       width: 100%; max-width: 1300px; margin-left: auto; margin-right: auto;
     }
 
-    /* === BARRA DE PESQUISA E FILTROS === */
     .search-filter-bar {
       display: flex;
       gap: 0.8rem;
@@ -184,7 +182,6 @@
       padding: 0 1rem;
     }
 
-    /* === CARD ESTILO NETFLIX === */
     .card {
       position: relative;
       background: rgba(0, 0, 0, 0.3);
@@ -209,7 +206,6 @@
       transition: filter 0.3s ease;
     }
 
-    /* Card bloqueado - capa em preto e branco */
     .card.locked .card-cover {
       filter: grayscale(100%) brightness(0.6);
     }
@@ -218,7 +214,6 @@
       filter: grayscale(100%) brightness(0.7);
     }
 
-    /* Badge de bloqueado */
     .card.locked::before {
       content: "🔒";
       position: absolute;
@@ -231,7 +226,6 @@
       z-index: 5;
     }
 
-    /* Overlay de informações */
     .card-info {
       padding: 16px;
       background: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.7) 30%, rgba(0, 0, 0, 0.95) 100%);
@@ -291,7 +285,6 @@
       display: inline-block;
     }
 
-    /* Badge "Adquirir" para bloqueados */
     .card.locked .card-info::after {
       content: "Clique para adquirir";
       display: block;
@@ -307,7 +300,6 @@
       letter-spacing: 0.5px;
     }
 
-    /* === LOADING E ERRO === */
     .loading-container, .error-container {
       display: flex;
       flex-direction: column;
@@ -382,82 +374,82 @@
       .header-right { width: 100%; justify-content: space-between; }
       .welcome-title { font-size: 1.6rem; }
       .grid { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.2rem; padding: 0; }
+      .logo img { height: 30px; }
     }
 
     @media (max-width: 480px) {
       .grid { grid-template-columns: 1fr; }
     }
-  /* === TOOLTIP DO BOTÃO SÓ ATIVOS === */
-.filter-btn-wrapper {
-  position: relative;
-}
 
-.filter-tooltip {
-  display: none;
-  position: absolute;
-  top: calc(100% + 10px);
-  right: 0;
-  width: 320px;
-  background: rgba(0, 0, 0, 0.92);
-  backdrop-filter: blur(12px);
-  color: #fff;
-  font-size: 0.78rem;
-  line-height: 1.5;
-  padding: 14px 16px;
-  border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
-  z-index: 100;
-  pointer-events: none;
-}
+    .filter-btn-wrapper {
+      position: relative;
+    }
 
-.filter-tooltip::before {
-  content: '';
-  position: absolute;
-  top: -6px;
-  right: 24px;
-  width: 12px;
-  height: 12px;
-  background: rgba(0, 0, 0, 0.92);
-  border-left: 1px solid rgba(255, 255, 255, 0.15);
-  border-top: 1px solid rgba(255, 255, 255, 0.15);
-  transform: rotate(45deg);
-}
+    .filter-tooltip {
+      display: none;
+      position: absolute;
+      top: calc(100% + 10px);
+      right: 0;
+      width: 320px;
+      background: rgba(0, 0, 0, 0.92);
+      backdrop-filter: blur(12px);
+      color: #fff;
+      font-size: 0.78rem;
+      line-height: 1.5;
+      padding: 14px 16px;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+      z-index: 100;
+      pointer-events: none;
+    }
 
-.filter-tooltip strong {
-  color: var(--laranja-vibrante);
-}
+    .filter-tooltip::before {
+      content: '';
+      position: absolute;
+      top: -6px;
+      right: 24px;
+      width: 12px;
+      height: 12px;
+      background: rgba(0, 0, 0, 0.92);
+      border-left: 1px solid rgba(255, 255, 255, 0.15);
+      border-top: 1px solid rgba(255, 255, 255, 0.15);
+      transform: rotate(45deg);
+    }
 
-.filter-tooltip a {
-  color: var(--laranja-claro);
-  text-decoration: none;
-  font-weight: 600;
-}
+    .filter-tooltip strong {
+      color: var(--laranja-vibrante);
+    }
 
-.filter-tooltip a:hover {
-  text-decoration: underline;
-}
+    .filter-tooltip a {
+      color: var(--laranja-claro);
+      text-decoration: none;
+      font-weight: 600;
+    }
 
-.filter-btn-wrapper:hover .filter-tooltip {
-  display: block;
-}
+    .filter-tooltip a:hover {
+      text-decoration: underline;
+    }
 
-@media (max-width: 480px) {
-  .filter-tooltip {
-    width: 260px;
-    left: -40px;
-  }
-  .filter-tooltip::before {
-    left: 64px;
-  }
-}  
+    .filter-btn-wrapper:hover .filter-tooltip {
+      display: block;
+    }
+
+    @media (max-width: 480px) {
+      .filter-tooltip {
+        width: 260px;
+        left: -40px;
+      }
+      .filter-tooltip::before {
+        left: 64px;
+      }
+    }
   </style>
 </head>
 <body>
   <header>
     <div class="logo">
-      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Cdefs%3E%3Cstyle%3E.cls-1%7Bfill:%23270949;%7D.cls-2%7Bfill:%23ff3d00;%7D.cls-3%7Bfill:%23fff;%7D%3C/style%3E%3C/defs%3E%3Cpath class='cls-1' d='M140,180 L140,120 Q140,50 200,50 L200,50 Q260,50 260,120 L260,180' stroke='%23270949' stroke-width='28' fill='none' stroke-linecap='round'/%3E%3Crect class='cls-2' x='100' y='170' width='200' height='180' rx='25'/%3E%3Ccircle class='cls-3' cx='200' cy='250' r='30'/%3E%3Crect class='cls-3' x='185' y='250' width='30' height='60' rx='8'/%3E%3C/svg%3E" alt="Upperfy Logo">
-      <div class="brand">Upperfy</div>
+      <img src="../assets/capas/logo-upperfy-orange.svg" alt="Upperfy Logo">
     </div>
     <div class="header-right">
       <div class="user-menu">
@@ -476,27 +468,24 @@
 
     <h2 class="systems-title">Seus sistemas</h2>
     
-    <!-- Barra de pesquisa e filtros -->
     <div class="search-filter-bar">
       <div class="search-input-wrapper">
         <span class="search-icon">🔍</span>
         <input type="text" class="search-input" id="searchInput" placeholder="Pesquisar por nome...">
       </div>
-<div class="filter-btn-wrapper">
-  <button class="filter-btn active" id="filterAtivos" onclick="toggleFiltroAtivos()">
-    <span>✓</span> Só ativos
-  </button>
-  <div class="filter-tooltip">
-    A Upperfy oferece diversos serviços que podem estar sendo utilizados <strong>direta ou indiretamente</strong> pela sua empresa.<br><br>
-    Apenas os serviços <strong>contratados</strong> ficam ativos nesta tela. Alguns serviços podem estar operando em segundo plano, mas para utilizá-los ativamente é necessário contratar.<br><br>
-    Para mais informações: <a href="mailto:agenciaupperfy@gmail.com">agenciaupperfy@gmail.com</a>
-  </div>
-</div>
+      <div class="filter-btn-wrapper">
+        <button class="filter-btn active" id="filterAtivos" onclick="toggleFiltroAtivos()">
+          <span>✓</span> Só ativos
+        </button>
+        <div class="filter-tooltip">
+          A Upperfy oferece diversos serviços que podem estar sendo utilizados <strong>direta ou indiretamente</strong> pela sua empresa.<br><br>
+          Apenas os serviços <strong>contratados</strong> ficam ativos nesta tela. Alguns serviços podem estar operando em segundo plano, mas para utilizá-los ativamente é necessário contratar.<br><br>
+          Para mais informações: <a href="mailto:agenciaupperfy@gmail.com">agenciaupperfy@gmail.com</a>
+        </div>
+      </div>
     </div>
     
-    <!-- Container dinâmico dos cards -->
     <div id="sistemasContainer">
-      <!-- Loading inicial -->
       <div class="loading-container" id="loadingState">
         <div class="loading-spinner"></div>
         <p class="loading-text">Carregando seus sistemas...</p>
@@ -509,26 +498,18 @@
   </footer>
 
   <script>
-    // ==========================================
-    // 1. VERIFICA SE O USUÁRIO ESTÁ LOGADO
-    // ==========================================
     const autenticado = localStorage.getItem('autenticado');
     const idFuncionario = localStorage.getItem('id_funcionario');
     const usuarioNome = localStorage.getItem('usuario_nome');
     const empresaNome = localStorage.getItem('empresa_nome');
 
-    // Variáveis para pesquisa e filtro
     let sistemasCarregados = [];
     let filtroAtivosAtivo = true;
 
-    // Se não tiver os dados, manda de volta para o login da Plataforma
     if (autenticado !== 'true' || !idFuncionario) {
       window.location.href = '../index.html';
     }
 
-    // ==========================================
-    // 2. PREENCHE DADOS DO USUÁRIO NA TELA
-    // ==========================================
     window.addEventListener('DOMContentLoaded', () => {
       const welcomeTitle = document.getElementById('welcomeTitle');
       const welcomeSubtitle = document.getElementById('welcomeSubtitle');
@@ -546,33 +527,24 @@
         welcomeSubtitle.textContent = `${empresaNome} - Acesse seus sistemas disponíveis`;
       }
 
-      // Carrega os sistemas do n8n
       carregarSistemas();
 
-      // Evento de pesquisa
       document.getElementById('searchInput').addEventListener('input', aplicarFiltros);
     });
 
-    // ==========================================
-    // 3. FUNÇÃO PARA CARREGAR SISTEMAS DO N8N
-    // ==========================================
     async function carregarSistemas() {
       const container = document.getElementById('sistemasContainer');
       
       try {
-        // Monta objeto com todo o localStorage
         const dadosLocalStorage = {};
         for (let i = 0; i < localStorage.length; i++) {
           const chave = localStorage.key(i);
           dadosLocalStorage[chave] = localStorage.getItem(chave);
         }
 
-        // Faz a requisição POST para o n8n
         const response = await fetch('https://n8n.upperfy.com.br/webhook/b45a3be4-1f27-4b01-b341-dashplatupfy', {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(dadosLocalStorage)
         });
 
@@ -582,15 +554,11 @@
 
         const dados = await response.json();
 
-        // Verifica se recebeu a lista de sistemas
         if (!dados.sistemas || !Array.isArray(dados.sistemas)) {
           throw new Error('Formato de resposta inválido');
         }
 
-        // Salva os sistemas na variável global
         sistemasCarregados = dados.sistemas;
-
-        // Renderiza os cards
         aplicarFiltros();
 
       } catch (erro) {
@@ -599,13 +567,9 @@
       }
     }
 
-    // ==========================================
-    // 4. FUNÇÃO PARA RENDERIZAR OS CARDS
-    // ==========================================
     function renderizarCards(sistemas) {
       const container = document.getElementById('sistemasContainer');
       
-      // Cria o grid
       const grid = document.createElement('div');
       grid.className = 'grid';
 
@@ -613,17 +577,11 @@
         const card = document.createElement('div');
         card.className = `card ${sistema.bloqueado ? 'locked' : 'unlocked'}`;
         
-        // Define a URL de destino baseado no status
-        const urlDestino = sistema.bloqueado ? sistema.url_compra : sistema.url_acesso;
-        
-        // Adiciona evento de clique
         card.onclick = (e) => {
-          // Não navega se clicou no botão "Ver mais"
           if (e.target.classList.contains('ver-mais-btn')) return;
           acessarSistema(sistema);
         };
 
-        // Monta o HTML do card
         card.innerHTML = `
           <img 
             class="card-cover" 
@@ -641,11 +599,9 @@
         grid.appendChild(card);
       });
 
-      // Substitui o loading pelo grid
       container.innerHTML = '';
       container.appendChild(grid);
 
-      // Verifica quais descrições precisam do botão "Ver mais"
       setTimeout(() => {
         sistemas.forEach((sistema, index) => {
           verificarOverflow(index);
@@ -653,24 +609,17 @@
       }, 100);
     }
 
-    // ==========================================
-    // 4.1. FUNÇÃO PARA VERIFICAR OVERFLOW
-    // ==========================================
     function verificarOverflow(index) {
       const desc = document.getElementById(`desc-${index}`);
       const btn = document.getElementById(`btn-${index}`);
       
       if (desc && btn) {
-        // Verifica se o texto está cortado
         if (desc.scrollHeight > desc.clientHeight) {
           btn.classList.add('visible');
         }
       }
     }
 
-    // ==========================================
-    // 4.2. FUNÇÃO PARA TOGGLE DA DESCRIÇÃO
-    // ==========================================
     function toggleDescricao(index, event) {
       event.stopPropagation();
       
@@ -688,9 +637,6 @@
       }
     }
 
-    // ==========================================
-    // 4.3. FUNÇÃO PARA TOGGLE DO FILTRO ATIVOS
-    // ==========================================
     function toggleFiltroAtivos() {
       filtroAtivosAtivo = !filtroAtivosAtivo;
       const btn = document.getElementById('filterAtivos');
@@ -704,22 +650,17 @@
       aplicarFiltros();
     }
 
-    // ==========================================
-    // 4.4. FUNÇÃO PARA APLICAR FILTROS
-    // ==========================================
     function aplicarFiltros() {
       const termoPesquisa = document.getElementById('searchInput').value.toLowerCase().trim();
       
       let sistemasFiltrados = sistemasCarregados;
       
-      // Filtro por nome
       if (termoPesquisa) {
         sistemasFiltrados = sistemasFiltrados.filter(sistema => 
           sistema.nome.toLowerCase().includes(termoPesquisa)
         );
       }
       
-      // Filtro só ativos (não bloqueados)
       if (filtroAtivosAtivo) {
         sistemasFiltrados = sistemasFiltrados.filter(sistema => !sistema.bloqueado);
       }
@@ -727,9 +668,6 @@
       renderizarCards(sistemasFiltrados);
     }
 
-    // ==========================================
-    // 5. FUNÇÃO PARA MOSTRAR ERRO
-    // ==========================================
     function mostrarErro(mensagem) {
       const container = document.getElementById('sistemasContainer');
       
@@ -742,17 +680,12 @@
       `;
     }
 
-    // ==========================================
-    // 6. FUNÇÃO DE ACESSO AOS SISTEMAS (SSO)
-    // ==========================================
     function acessarSistema(sistema) {
-      // Se estiver bloqueado, vai para a página de compra
       if (sistema.bloqueado) {
         window.location.href = sistema.url_compra;
         return;
       }
 
-      // Se usa SSO (como o Clockfy)
       if (sistema.usa_sso) {
         const rawUser = localStorage.getItem('usuario');
         
@@ -762,21 +695,14 @@
           return;
         }
 
-        // Codifica os dados do usuário em Base64 para enviar na URL
         const token = btoa(rawUser);
-        
-        // Redireciona para o sistema levando o token
         window.location.href = `${sistema.url_acesso}?auth_data=${token}`;
         return;
       }
 
-      // Para sistemas sem SSO, acesso direto
       window.location.href = sistema.url_acesso;
     }
 
-    // ==========================================
-    // 7. FUNÇÃO DE LOGOUT
-    // ==========================================
     function logout() {
       if (confirm('Deseja realmente sair?')) {
         localStorage.clear();
