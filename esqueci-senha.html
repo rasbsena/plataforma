@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redefinir Senha - Clockfy</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234F1295' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'%3E%3C/circle%3E%3Cpolyline points='12 6 12 12 16 14'%3E%3C/polyline%3E%3C/svg%3E">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --roxo-escuro: #270949;
+            --roxo-medio: #87148C;
+            --roxo-vivo: #4F1295;
+            --laranja-vibrante: #FF3D00;
+            --laranja-claro: #FF9200;
+            --branco: #FFFFFF;
+            --cinza-suave: #F4F4F9;
+            --verde-sucesso: #4CAF50;
+            --vermelho-erro: #D32F2F;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: linear-gradient(135deg, var(--roxo-escuro) 0%, var(--roxo-vivo) 50%, var(--roxo-medio) 100%);
+            background-size: 200% 200%;
+            animation: gradientShift 15s ease infinite;
+            overflow: hidden;
+            position: relative;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .bg-shape {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(5px);
+            z-index: 0;
+            animation: float 20s infinite linear;
+        }
+
+        .shape-1 {
+            width: 300px;
+            height: 300px;
+            top: -50px;
+            left: -50px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .shape-2 {
+            width: 200px;
+            height: 200px;
+            bottom: 50px;
+            right: -20px;
+            background: rgba(255, 61, 0, 0.1);
+            animation-delay: -5s;
+        }
+
+        .shape-3 {
+            width: 100px;
+            height: 100px;
+            top: 40%;
+            left: 20%;
+            animation-duration: 15s;
+            animation-direction: reverse;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            50% { transform: translate(20px, 20px) rotate(180deg); }
+            100% { transform: translate(0, 0) rotate(360deg); }
+        }
+
+        .container {
+            width: 100%;
+            max-width: 450px;
+            animation: fadeIn 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+            z-index: 10;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: 24px;
+            padding: 50px 40px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: linear-gradient(90deg, var(--laranja-vibrante), var(--roxo-vivo));
+        }
+
+        /* Estados da página */
+        .state {
+            display: none;
+        }
+
+        .state.active {
+            display: block;
+        }
+
+        /* Estado de Loading */
+        .loading-state {
+            text-align: center;
+            padding: 40px 0;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid #eee;
+            border-top-color: var(--roxo-vivo);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            color: #666;
+            font-size: 14px;
+        }
+
+        /* Estado de Erro */
+        .error-state {
+            text-align: center;
+        }
+
+        .error-icon {
+            width: 80px;
+            height: 80px;
+            background: #FFF0F0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+        }
+
+        .error-icon svg {
+            width: 40px;
+            height: 40px;
+            stroke: var(--vermelho-erro);
+        }
+
+        .error-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--roxo-escuro);
+            margin-bottom: 10px;
+        }
+
+        .error-message {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        /* Estado de Sucesso */
+        .success-state {
+            text-align: center;
+        }
+
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            background: #E8F5E9;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+        }
+
+        .success-icon svg {
+            width: 40px;
+            height: 40px;
+            stroke: var(--verde-sucesso);
+        }
+
+        .success-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--roxo-escuro);
+            margin-bottom: 10px;
+        }
+
+        .success-message {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        /* Estado do Formulário */
+        .form-state {
+            /* Estilos do formulário */
+        }
+
+        .logo-section {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo-section svg {
+            animation: pulseLogo 4s ease-in-out infinite;
+        }
+
+        @keyframes pulseLogo {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .brand-name {
+            font-size: 32px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--roxo-escuro), var(--roxo-vivo));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 4px;
+        }
+
+        .page-title {
+            font-size: 14px;
+            color: #666;
+            font-weight: 500;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--roxo-escuro);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-wrapper .icon {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+        }
+
+        .input-wrapper input {
+            width: 100%;
+            padding: 16px 16px 16px 48px;
+            border: 2px solid #eee;
+            border-radius: 12px;
+            font-size: 15px;
+            font-family: 'Montserrat', sans-serif;
+            color: var(--roxo-escuro);
+            transition: all 0.3s ease;
+            background: #fcfcfc;
+        }
+
+        .input-wrapper input:focus {
+            outline: none;
+            border-color: var(--roxo-medio);
+            background: var(--branco);
+            box-shadow: 0 4px 15px rgba(135, 20, 140, 0.1);
+        }
+
+        .input-wrapper input.error {
+            border-color: var(--vermelho-erro);
+        }
+
+        .input-wrapper input.success {
+            border-color: var(--verde-sucesso);
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #999;
+            padding: 4px;
+        }
+
+        .password-toggle:hover {
+            color: var(--roxo-vivo);
+        }
+
+        .password-requirements {
+            margin-top: 8px;
+            font-size: 11px;
+            color: #888;
+        }
+
+        .match-indicator {
+            margin-top: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            display: none;
+        }
+
+        .match-indicator.show {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .match-indicator.match {
+            color: var(--verde-sucesso);
+        }
+
+        .match-indicator.no-match {
+            color: var(--vermelho-erro);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 18px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--branco);
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            margin-top: 10px;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--laranja-vibrante), #FF6D00);
+            box-shadow: 0 10px 20px rgba(255, 61, 0, 0.2);
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(255, 61, 0, 0.3);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-secondary {
+            background: var(--roxo-vivo);
+            box-shadow: 0 10px 20px rgba(79, 18, 149, 0.2);
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(79, 18, 149, 0.3);
+        }
+
+        .btn .spinner {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top-color: var(--branco);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+
+        .btn.loading .spinner {
+            display: inline-block;
+        }
+
+        .btn.loading .btn-text {
+            opacity: 0.8;
+        }
+
+        .form-error {
+            background: #FFF0F0;
+            border-left: 4px solid var(--vermelho-erro);
+            color: var(--vermelho-erro);
+            padding: 12px 14px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .form-error.show {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .footer-text {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 500;
+        }
+
+        .back-to-login {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .back-to-login a {
+            color: var(--roxo-medio);
+            font-size: 13px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .back-to-login a:hover {
+            color: var(--roxo-vivo);
+            text-decoration: underline;
+        }
+
+        @media (max-width: 480px) {
+            .card { padding: 40px 25px; }
+            .brand-name { font-size: 28px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-shape shape-1"></div>
+    <div class="bg-shape shape-2"></div>
+    <div class="bg-shape shape-3"></div>
+
+    <div class="container">
+        <div class="card">
+            
+            <!-- Estado: Carregando -->
+            <div class="state loading-state active" id="loadingState">
+                <div class="loading-spinner"></div>
+                <p class="loading-text">Validando link de recuperação...</p>
+            </div>
+
+            <!-- Estado: Erro (Token inválido) -->
+            <div class="state error-state" id="errorState">
+                <div class="error-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="15" y1="9" x2="9" y2="15"></line>
+                        <line x1="9" y1="9" x2="15" y2="15"></line>
+                    </svg>
+                </div>
+                <h2 class="error-title">Link Inválido</h2>
+                <p class="error-message" id="errorText">
+                    Este link de recuperação é inválido ou já expirou. 
+                    Por favor, solicite uma nova recuperação de senha.
+                </p>
+                <a href="https://clockfy.upperfy.com.br" class="btn btn-secondary">
+                    Voltar ao Login
+                </a>
+            </div>
+
+            <!-- Estado: Formulário -->
+            <div class="state form-state" id="formState">
+                <div class="logo-section">
+                    <svg width="70" height="70" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="100" cy="100" r="90" stroke="#270949" stroke-width="12"/>
+                        <path d="M100 45V100L135 135" stroke="#FF3D00" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+                        <circle cx="100" cy="100" r="8" fill="#270949"/>
+                        <circle cx="100" cy="25" r="4" fill="#87148C"/>
+                        <circle cx="175" cy="100" r="4" fill="#87148C"/>
+                        <circle cx="100" cy="175" r="4" fill="#87148C"/>
+                        <circle cx="25" cy="100" r="4" fill="#87148C"/>
+                    </svg>
+                    <div class="brand-name">Clockfy</div>
+                    <p class="page-title">Redefinição de Senha</p>
+                </div>
+
+                <form id="resetForm">
+                    <div class="form-group">
+                        <label for="novaSenha">Nova Senha</label>
+                        <div class="input-wrapper">
+                            <span class="icon">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                                </svg>
+                            </span>
+                            <input type="password" id="novaSenha" name="novaSenha" placeholder="Mínimo 6 caracteres" required minlength="6">
+                            <button type="button" class="password-toggle" onclick="togglePassword('novaSenha', this)">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="eye-icon">
+                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                    <circle cx="12" cy="12" r="3"></circle>
+                                </svg>
+                            </button>
+                        </div>
+                        <p class="password-requirements">Mínimo de 6 caracteres</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirmarSenha">Confirmar Nova Senha</label>
+                        <div class="input-wrapper">
+                            <span class="icon">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                                </svg>
+                            </span>
+                            <input type="password" id="confirmarSenha" name="confirmarSenha" placeholder="Repita a nova senha" required minlength="6">
+                            <button type="button" class="password-toggle" onclick="togglePassword('confirmarSenha', this)">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="eye-icon">
+                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                    <circle cx="12" cy="12" r="3"></circle>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="match-indicator" id="matchIndicator">
+                            <span class="indicator-icon"></span>
+                            <span class="indicator-text"></span>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" id="btnSubmit" disabled>
+                        <span class="btn-text">Redefinir Senha</span>
+                        <div class="spinner"></div>
+                    </button>
+
+                    <div class="form-error" id="formError"></div>
+                </form>
+
+                <div class="back-to-login">
+                    <a href="https://clockfy.upperfy.com.br">← Voltar ao Login</a>
+                </div>
+            </div>
+
+            <!-- Estado: Sucesso -->
+            <div class="state success-state" id="successState">
+                <div class="success-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                        <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                    </svg>
+                </div>
+                <h2 class="success-title">Senha Redefinida!</h2>
+                <p class="success-message">
+                    Sua senha foi alterada com sucesso. 
+                    Agora você pode acessar sua conta com a nova senha.
+                </p>
+                <a href="https://clockfy.upperfy.com.br" class="btn btn-primary">
+                    Acessar Minha Conta
+                </a>
+            </div>
+
+        </div>
+
+        <div class="footer-text">
+            © 2025 Clockfy - Tecnologia em Gestão de Tempo
+        </div>
+    </div>
+
+    <script>
+        /* ========================================
+           CONFIGURAÇÃO
+           ======================================== */
+        const VALIDAR_TOKEN_URL = "https://n8n.upperfy.com.br/webhook/validar-token";
+        const REDEFINIR_SENHA_URL = "https://n8n.upperfy.com.br/webhook/a8bc2c3d-3920-4a73-8fa2-g0t31Stl";
+        const LOGIN_URL = "https://clockfy.upperfy.com.br";
+
+        /* ========================================
+           ELEMENTOS
+           ======================================== */
+        const loadingState = document.getElementById('loadingState');
+        const errorState = document.getElementById('errorState');
+        const formState = document.getElementById('formState');
+        const successState = document.getElementById('successState');
+        const errorText = document.getElementById('errorText');
+        const resetForm = document.getElementById('resetForm');
+        const novaSenhaInput = document.getElementById('novaSenha');
+        const confirmarSenhaInput = document.getElementById('confirmarSenha');
+        const matchIndicator = document.getElementById('matchIndicator');
+        const btnSubmit = document.getElementById('btnSubmit');
+        const formError = document.getElementById('formError');
+
+        // Token extraído da URL
+        let currentToken = null;
+
+        /* ========================================
+           FUNÇÕES DE ESTADO
+           ======================================== */
+        function showState(stateName) {
+            // Esconde todos os estados
+            document.querySelectorAll('.state').forEach(s => s.classList.remove('active'));
+            // Mostra o estado desejado
+            document.getElementById(stateName + 'State').classList.add('active');
+        }
+
+        /* ========================================
+           VALIDAÇÃO DO TOKEN
+           ======================================== */
+        async function validateToken() {
+            // Extrai o token da URL
+            const urlParams = new URLSearchParams(window.location.search);
+            currentToken = urlParams.get('token');
+
+            // Se não tem token na URL, mostra erro
+            if (!currentToken) {
+                showState('error');
+                errorText.textContent = 'Nenhum token de recuperação encontrado. Acesse o link enviado por e-mail.';
+                return;
+            }
+
+            try {
+                const response = await fetch(VALIDAR_TOKEN_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ token: currentToken })
+                });
+
+                const data = await response.json();
+
+                if (data.valido === true) {
+                    // Token válido - mostra o formulário
+                    showState('form');
+                } else {
+                    // Token inválido - mostra erro
+                    showState('error');
+                    errorText.textContent = data.mensagem || 'Este link de recuperação é inválido ou já expirou. Por favor, solicite uma nova recuperação de senha.';
+                }
+            } catch (error) {
+                console.error('Erro ao validar token:', error);
+                showState('error');
+                errorText.textContent = 'Não foi possível validar o link. Verifique sua conexão e tente novamente.';
+            }
+        }
+
+        /* ========================================
+           VALIDAÇÃO DE SENHAS
+           ======================================== */
+        function checkPasswordMatch() {
+            const senha = novaSenhaInput.value;
+            const confirmar = confirmarSenhaInput.value;
+
+            if (confirmar.length === 0) {
+                matchIndicator.classList.remove('show', 'match', 'no-match');
+                confirmarSenhaInput.classList.remove('success', 'error');
+                btnSubmit.disabled = true;
+                return;
+            }
+
+            matchIndicator.classList.add('show');
+
+            if (senha === confirmar && senha.length >= 6) {
+                matchIndicator.classList.remove('no-match');
+                matchIndicator.classList.add('match');
+                matchIndicator.querySelector('.indicator-text').textContent = '✓ Senhas conferem';
+                confirmarSenhaInput.classList.remove('error');
+                confirmarSenhaInput.classList.add('success');
+                novaSenhaInput.classList.add('success');
+                btnSubmit.disabled = false;
+            } else {
+                matchIndicator.classList.remove('match');
+                matchIndicator.classList.add('no-match');
+                matchIndicator.querySelector('.indicator-text').textContent = '✗ Senhas não conferem';
+                confirmarSenhaInput.classList.remove('success');
+                confirmarSenhaInput.classList.add('error');
+                novaSenhaInput.classList.remove('success');
+                btnSubmit.disabled = true;
+            }
+        }
+
+        novaSenhaInput.addEventListener('input', checkPasswordMatch);
+        confirmarSenhaInput.addEventListener('input', checkPasswordMatch);
+
+        /* ========================================
+           TOGGLE SENHA
+           ======================================== */
+        function togglePassword(inputId, button) {
+            const input = document.getElementById(inputId);
+            const icon = button.querySelector('.eye-icon');
+            
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.innerHTML = `
+                    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                    <line x1="1" y1="1" x2="23" y2="23"></line>
+                `;
+            } else {
+                input.type = 'password';
+                icon.innerHTML = `
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                    <circle cx="12" cy="12" r="3"></circle>
+                `;
+            }
+        }
+
+        /* ========================================
+           SUBMIT DO FORMULÁRIO
+           ======================================== */
+        resetForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            formError.classList.remove('show');
+
+            const novaSenha = novaSenhaInput.value;
+            const confirmarSenha = confirmarSenhaInput.value;
+
+            // Validações
+            if (novaSenha.length < 6) {
+                showFormError('A senha deve ter no mínimo 6 caracteres.');
+                return;
+            }
+
+            if (novaSenha !== confirmarSenha) {
+                showFormError('As senhas não conferem.');
+                return;
+            }
+
+            setLoadingButton(true);
+
+            try {
+                const response = await fetch(REDEFINIR_SENHA_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        token: currentToken,
+                        nova_senha: novaSenha
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.sucesso === true) {
+                    showState('success');
+                } else {
+                    showFormError(data.mensagem || 'Não foi possível redefinir a senha. Tente novamente.');
+                    setLoadingButton(false);
+                }
+            } catch (error) {
+                console.error('Erro:', error);
+                showFormError('Falha na comunicação com o servidor. Tente novamente.');
+                setLoadingButton(false);
+            }
+        });
+
+        function setLoadingButton(isLoading) {
+            if (isLoading) {
+                btnSubmit.classList.add('loading');
+                btnSubmit.disabled = true;
+                btnSubmit.querySelector('.btn-text').textContent = 'Redefinindo...';
+            } else {
+                btnSubmit.classList.remove('loading');
+                btnSubmit.disabled = false;
+                btnSubmit.querySelector('.btn-text').textContent = 'Redefinir Senha';
+            }
+        }
+
+        function showFormError(message) {
+            formError.textContent = message;
+            formError.classList.add('show');
+        }
+
+        /* ========================================
+           INICIALIZAÇÃO
+           ======================================== */
+        window.addEventListener('DOMContentLoaded', () => {
+            validateToken();
+        });
+    </script>
+</body>
+</html>
