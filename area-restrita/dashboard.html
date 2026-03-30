@@ -387,6 +387,70 @@
     @media (max-width: 480px) {
       .grid { grid-template-columns: 1fr; }
     }
+  /* === TOOLTIP DO BOTÃO SÓ ATIVOS === */
+.filter-btn-wrapper {
+  position: relative;
+}
+
+.filter-tooltip {
+  display: none;
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+  width: 320px;
+  background: rgba(0, 0, 0, 0.92);
+  backdrop-filter: blur(12px);
+  color: #fff;
+  font-size: 0.78rem;
+  line-height: 1.5;
+  padding: 14px 16px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+  z-index: 100;
+  pointer-events: none;
+}
+
+.filter-tooltip::before {
+  content: '';
+  position: absolute;
+  top: -6px;
+  left: 24px;
+  width: 12px;
+  height: 12px;
+  background: rgba(0, 0, 0, 0.92);
+  border-left: 1px solid rgba(255, 255, 255, 0.15);
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  transform: rotate(45deg);
+}
+
+.filter-tooltip strong {
+  color: var(--laranja-vibrante);
+}
+
+.filter-tooltip a {
+  color: var(--laranja-claro);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.filter-tooltip a:hover {
+  text-decoration: underline;
+}
+
+.filter-btn-wrapper:hover .filter-tooltip {
+  display: block;
+}
+
+@media (max-width: 480px) {
+  .filter-tooltip {
+    width: 260px;
+    left: -40px;
+  }
+  .filter-tooltip::before {
+    left: 64px;
+  }
+}  
   </style>
 </head>
 <body>
